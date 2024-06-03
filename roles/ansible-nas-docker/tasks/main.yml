@@ -6,19 +6,19 @@
   register: result
   until: result is succeeded
 
-- name: Remove docker-py python module
-  ansible.builtin.pip:
-    name: docker-py
-    state: absent
-  register: result
-  until: result is succeeded
+#- name: Remove docker-py python module
+#  ansible.builtin.pip:
+#    name: docker-py
+#    state: absent
+#  register: result
+#  until: result is succeeded
 
-- name: Install docker python module
-  ansible.builtin.pip:
-    name: docker
-    state: present
-  register: result
-  until: result is succeeded
+#- name: Install docker python module
+#  ansible.builtin.pip:
+#    name: docker
+#    state: present
+#  register: result
+#  until: result is succeeded
 
 - name: Create Docker home directory
   ansible.builtin.file:
