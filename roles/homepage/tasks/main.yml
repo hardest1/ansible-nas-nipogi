@@ -24,7 +24,7 @@
       community.docker.docker_container:
         name: "{{ homepage_container_name }}"
         image: "{{ homepage_image_name }}:{{ homepage_image_tag }}"
-        pull: true
+        pull: false
         volumes:
           - "{{ homepage_data_directory }}:/app/config"
           - "/var/run/docker.sock:/var/run/docker.sock"

@@ -13,7 +13,7 @@ minio_admin_password: supersecure
 # network
 minio_hostname: "minio"
 minio_network_name: "minio"
-minio_api_port: "9000"
+minio_api_port: "9069" # Change port bc of conflict with portainer on 9000
 minio_console_port: "9009"
 
 # docker
