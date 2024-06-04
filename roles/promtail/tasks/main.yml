@@ -43,6 +43,10 @@
           traefik.http.routers.promtail.tls.domains[0].main: "{{ ansible_nas_domain }}"
           traefik.http.routers.promtail.tls.domains[0].sans: "*.{{ ansible_nas_domain }}"
           traefik.http.services.promtail.loadbalancer.server.port: "9080"
+          homepage.group: Monitoring
+          homepage.name: Promtail
+          homepage.href: "http://{{ ansible_nas_hostname }}:9080"
+          homepage.description: Docker log scraper
   when: promtail_enabled is true
 
 - name: Stop promtail

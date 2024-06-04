@@ -34,6 +34,11 @@
           traefik.http.routers.wireshark.tls.domains[0].main: "{{ ansible_nas_domain }}"
           traefik.http.routers.wireshark.tls.domains[0].sans: "*.{{ ansible_nas_domain }}"
           traefik.http.services.wireshark.loadbalancer.server.port: "3000"
+          homepage.group: Monitoring
+          homepage.name: Wireshark
+          homepage.abbr: WS
+          homepage.href: "http://{{ ansible_nas_hostname }}:10010"
+          homepage.description: Packet monitor
   when: wireshark_enabled is true
 
 - name: Stop Wireshark

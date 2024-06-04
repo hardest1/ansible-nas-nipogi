@@ -23,6 +23,7 @@
         restart_policy: unless-stopped
         memory: "{{ n8n_memory }}"
         env:
+          N8N_SECURE_COOKIE: "false"
           N8N_BASIC_AUTH_ACTIVE: "true"
           N8N_BASIC_AUTH_USER: "{{ n8n_basic_auth_user }}"
           N8N_BASIC_AUTH_PASSWORD: "{{ n8n_basic_auth_password }}"
@@ -33,6 +34,11 @@
           traefik.http.routers.n8n.tls.domains[0].main: "{{ ansible_nas_domain }}"
           traefik.http.routers.n8n.tls.domains[0].sans: "*.{{ ansible_nas_domain }}"
           traefik.http.services.n8n.loadbalancer.server.port: "5678"
+          homepage.group: Smart Home
+          homepage.name: n8n
+          homepage.icon: n8n
+          homepage.href: "http://{{ ansible_nas_hostname }}:5678"
+          homepage.description: Automation
   when: n8n_enabled is true
 
 - name: Stop n8n

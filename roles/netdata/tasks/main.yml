@@ -34,6 +34,11 @@
           traefik.http.routers.netdata.tls.domains[0].main: "{{ ansible_nas_domain }}"
           traefik.http.routers.netdata.tls.domains[0].sans: "*.{{ ansible_nas_domain }}"
           traefik.http.services.netdata.loadbalancer.server.port: "19999"
+          homepage.group: Monitoring
+          homepage.name: Netdata
+          homepage.icon: netdata
+          homepage.href: "http://{{ ansible_nas_hostname }}:19999"
+          homepage.description: System monitor
   when: netdata_enabled is true
 
 - name: Stop Netdata

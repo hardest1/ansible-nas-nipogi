@@ -20,6 +20,13 @@
         env:
           EULA: "TRUE"
         restart_policy: unless-stopped
+        labels:
+          homepage.group: Fun
+          homepage.name: Minecraft
+          homepage.icon: minecraft
+          homepage.description: Sandbox game
+          homepage.widget.type: minecraft
+          homepage.widget.url: "udp://{{ ansible_nas_hostname }}:25565"
   when: minecraft_server_enabled is true
 
 - name: Stop Minecraft Server

@@ -33,6 +33,11 @@
           traefik.http.routers.minio.tls.domains[0].main: "{{ ansible_nas_domain }}"
           traefik.http.routers.minio.tls.domains[0].sans: "*.{{ ansible_nas_domain }}"
           traefik.http.services.minio.loadbalancer.server.port: "9000"
+          homepage.group: System
+          homepage.name: MinIO
+          homepage.icon: minio
+          homepage.href: "http://{{ ansible_nas_hostname }}:9069"
+          homepage.description: S3 Storage
   when: minio_enabled is true
 
 - name: Stop minio

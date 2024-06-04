@@ -33,6 +33,15 @@
           traefik.http.routers.pyload.tls.domains[0].main: "{{ ansible_nas_domain }}"
           traefik.http.routers.pyload.tls.domains[0].sans: "*.{{ ansible_nas_domain }}"
           traefik.http.services.pyload.loadbalancer.server.port: "8000"
+          homepage.group: Download Tools
+          homepage.name: PyLoad
+          homepage.icon: pyload
+          homepage.href: "http://{{ ansible_nas_hostname }}:8000"
+          homepage.description: Downloader
+          homepage.widget.type: pyload
+          homepage.widget.url: "http://{{ ansible_nas_hostname }}:8000"
+          homepage.widget.username: "{{ pyload_widget_username }}"
+          homepage.widget.password: "{{ pyload_widget_password }}"
   when: pyload_enabled is true
 
 - name: Stop pyLoad
