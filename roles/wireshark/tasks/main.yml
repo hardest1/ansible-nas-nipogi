@@ -21,6 +21,8 @@
           TZ: "{{ ansible_nas_timezone }}"
           PUID: "{{ wireshark_user_id }}"
           PGID: "{{ wireshark_group_id }}"
+          CUSTOM_PORT: "{{ wireshark_custom_port }}"
+          CUSTOM_HTTPS_PORT: "{{ wireshark_custom_https_port }}"
         capabilities:
           - NET_ADMIN
         restart_policy: unless-stopped
