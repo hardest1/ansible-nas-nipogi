@@ -37,8 +37,8 @@
           homepage.description: Docker monitor
           homepage.widget.type: portainer
           homepage.widget.url: "https://{{ ansible_nas_hostname }}:9000"
-          homepage.widget.env: "2"
-          homepage.widget.key: "{{ portainer_token }}"
+          homepage.widget.env: "{{ portainer_widget_env }}"
+          homepage.widget.key: "{{ portainer_widget_token }}"
   when: portainer_enabled is true
 
 - name: Stop Portainer
