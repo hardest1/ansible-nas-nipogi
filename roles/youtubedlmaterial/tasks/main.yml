@@ -40,6 +40,12 @@
           traefik.http.routers.youtubedlmaterial.tls.domains[0].main: "{{ ansible_nas_domain }}"
           traefik.http.routers.youtubedlmaterial.tls.domains[0].sans: "*.{{ ansible_nas_domain }}"
           traefik.http.services.youtubedlmaterial.loadbalancer.server.port: "17442"
+          homepage.group: Media
+          homepage.name: YoutubeDL
+          homepage.icon: youtubedl
+          homepage.href: http://{{ ansible_nas_hostname }}:8998
+          homepage.description: Youtube downloader
+          
   when: youtubedlmaterial_enabled is true
 
 - name: Stop Youtubedlmaterial
