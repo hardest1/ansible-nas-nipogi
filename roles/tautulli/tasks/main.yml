@@ -41,7 +41,7 @@
           homepage.description: Plex monitor
           homepage.widget.type: tautulli
           homepage.widget.url: "http://{{ ansible_nas_hostname }}:8185"
-          homepage.widget.key: 83cd0c08a35041038360f50ce78a7ca3
+          homepage.widget.key: "{{tautulli_widget_key}}"
   when: tautulli_enabled is true
 
 - name: Stop Tautulli
