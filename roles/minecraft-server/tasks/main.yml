@@ -21,7 +21,7 @@
           EULA: "TRUE"
         restart_policy: unless-stopped
         labels:
-          homepage.group: Fun
+          homepage.group: Monitoring
           homepage.name: Minecraft
           homepage.icon: minecraft
           homepage.description: Sandbox game

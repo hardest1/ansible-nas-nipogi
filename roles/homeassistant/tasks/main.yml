@@ -27,7 +27,7 @@
           traefik.http.routers.homeassistant.tls.domains[0].main: "{{ ansible_nas_domain }}"
           traefik.http.routers.homeassistant.tls.domains[0].sans: "*.{{ ansible_nas_domain }}"
           traefik.http.services.homeassistant.loadbalancer.server.port: "8123"
-          homepage.group: Smart Home
+          homepage.group: System
           homepage.name: Home Assistant
           homepage.icon: home-assistant
           homepage.href: "http://{{ ansible_nas_hostname }}:8123"
