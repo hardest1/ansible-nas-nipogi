@@ -14,6 +14,7 @@
         image: "{{ sonarr_image_name }}:{{ sonarr_image_version }}"
         pull: true
         volumes:
+          - "{{ nas_mount_volume }}"
           - "{{ sonarr_tv_directory }}:/tv:rw"
           - "{{ sonarr_download_directory }}:/downloads:rw"
           - "{{ sonarr_data_directory }}:/config:rw"
@@ -36,6 +37,11 @@
           homepage.name: "Sonarr"
           homepage.icon: "sonarr"
           homepage.href: "http://{{ ansible_nas_hostname }}:{{ sonarr_port }}"
+          homepage.description: TV DVR
+          homepage.widget.type: sonarr
+          homepage.widget.url: "http://{{ ansible_nas_hostname }}:8989"
+          homepage.widget.key: "{{ sonarr_token }}"
+          homepage.widget.enableQueue: "true"
   when: sonarr_enabled is true
 
 - name: Stop Sonarr

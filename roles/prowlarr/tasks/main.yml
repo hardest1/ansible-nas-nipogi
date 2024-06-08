@@ -14,6 +14,7 @@
         image: "{{ prowlarr_image_name }}:{{ prowlarr_image_version }}"
         pull: true
         volumes:
+          - "{{ nas_mount_volume }}"
           - "{{ prowlarr_data_directory }}:/config:rw"
         ports:
           - "{{ prowlarr_port }}:9696"
@@ -35,6 +36,9 @@
           homepage.icon: prowlarr
           homepage.href: "http://{{ ansible_nas_hostname }}:{{ prowlarr_port }}"
           homepage.description: Indexer Proxy
+          homepage.widget.type: prowlarr
+          homepage.widget.url: "http://{{ ansible_nas_hostname }}:9696"
+          homepage.widget.key: "{{ prowlarr_token }}"
 
   when: prowlarr_enabled is true
 

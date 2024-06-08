@@ -15,6 +15,7 @@
         image: "{{ overseerr_image_name }}:{{ overseerr_image_version }}"
         pull: true
         volumes:
+          - "{{ nas_mount_volume }}"
           - "{{ overseerr_data_directory }}/config:/app/config:rw"
         ports:
           - "{{ overseerr_webui_port }}:5055"
@@ -36,6 +37,9 @@
           homepage.icon: overseerr
           homepage.href: "http://{{ ansible_nas_hostname }}:{{ overseerr_webui_port }}"
           homepage.description: Media requests
+          homepage.widget.type: overseerr
+          homepage.widget.url: "http://{{ ansible_nas_hostname }}:5055"
+          homepage.widget.key: "{{ overseerr_token }}"
   when: overseerr_enabled is true
 
 - name: Stop Overseerr
