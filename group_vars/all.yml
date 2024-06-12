@@ -74,6 +74,9 @@ code_root: "{{ samba_shares_root }}/code"
 # Where roms are stored
 roms_root: "{{ samba_shares_root }}/roms"
 
+# Where pr0n is stored
+pron_root: "{{ samba_shares_root }}/pron"
+
 # The description that'll appear next to your Ansible-NAS box when browsing your network
 samba_server_string: Ansible NAS
 
@@ -182,6 +185,14 @@ samba_shares:
     writable: yes
     browseable: yes
     path: "{{ code_root }}"
+
+  - name: pron
+    comment: "Pr0n"
+    guest_ok: yes
+    public: yes
+    writable: yes
+    browseable: yes
+    path: "{{ pron_root }}"
 
 ###
 ### NFS
