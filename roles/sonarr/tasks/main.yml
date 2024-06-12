@@ -41,7 +41,7 @@
           homepage.widget.type: sonarr
           homepage.widget.url: "http://{{ ansible_nas_hostname }}:8989"
           homepage.widget.key: "{{ sonarr_token }}"
-          homepage.widget.enableQueue: "true"
+          homepage.widget.enableQueue: "false"
   when: sonarr_enabled is true
 
 - name: Stop Sonarr
