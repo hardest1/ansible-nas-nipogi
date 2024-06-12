@@ -434,6 +434,10 @@
       tags:
         - watchtower
 
+    - role: whisparr
+      tags:
+        - whisparr
+
     - role: wireshark
       tags:
         - wireshark

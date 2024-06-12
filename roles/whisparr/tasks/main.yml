@@ -1,0 +1,54 @@
+---
+- name: Start Whisparr
+  block:
+    - name: Create Whisparr Directories
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+      with_items:
+        - "{{ whisparr_data_directory }}"
+
+    - name: Whisparr
+      community.docker.docker_container:
+        name: "{{ whisparr_container_name }}"
+        image: "{{ whisparr_image_name }}:{{ whisparr_image_version }}"
+        pull: true
+        volumes:
+          - "{{ nas_mount_volume }}"
+          - "{{ whisparr_pron_directory }}:/data:rw"
+          - "{{ whisparr_download_directory }}:/downloads:rw"
+          - "{{ whisparr_data_directory }}:/config:rw"
+        ports:
+          - "{{ whisparr_port }}:6969"
+        env:
+          TZ: "{{ ansible_nas_timezone }}"
+          PUID: "{{ whisparr_user_id }}"
+          PGID: "{{ whisparr_group_id }}"
+          UMASK: "002"
+        restart_policy: unless-stopped
+        memory: "{{ whisparr_memory }}"
+        labels:
+          traefik.enable: "{{ whisparr_available_externally | string }}"
+          traefik.http.routers.whisparr.rule: "Host(`{{ whisparr_hostname }}.{{ ansible_nas_domain }}`)"
+          traefik.http.routers.whisparr.tls.certresolver: "letsencrypt"
+          traefik.http.routers.whisparr.tls.domains[0].main: "{{ ansible_nas_domain }}"
+          traefik.http.routers.whisparr.tls.domains[0].sans: "*.{{ ansible_nas_domain }}"
+          traefik.http.services.whisparr.loadbalancer.server.port: "6969"
+          homepage.group: "Download Tools"
+          homepage.name: "Whisparr"
+          homepage.icon: "whisparr"
+          homepage.href: "http://{{ ansible_nas_hostname }}:{{ whisparr_port }}"
+          homepage.description: Pr0n DVR
+          homepage.widget.type: whisparr
+          homepage.widget.url: "http://{{ ansible_nas_hostname }}:6969"
+          homepage.widget.key: "{{ whisparr_token }}"
+          homepage.widget.enableQueue: "false"
+  when: whisparr_enabled is true
+
+- name: Stop Whisparr
+  block:
+    - name: Stop Whisparr
+      community.docker.docker_container:
+        name: "{{ whisparr_container_name }}"
+        state: absent
+  when: whisparr_enabled is false

@@ -1,0 +1,24 @@
+---
+whisparr_enabled: false
+whisparr_available_externally: false
+
+# directories
+whisparr_data_directory: "{{ docker_home }}/whisparr/config"
+whisparr_pron_directory: "{{ pron_root }}"
+whisparr_download_directory: "{{ downloads_root }}"
+
+# uid / gid
+whisparr_user_id: "1000"
+whisparr_group_id: "1000"
+
+# network
+whisparr_port: "6969"
+whisparr_hostname: "whisparr"
+
+# docker
+whisparr_container_name: "whisparr"
+whisparr_image_name: "hotio/whisparr"
+whisparr_image_version: "latest"
+
+# specs
+whisparr_memory: 1g
