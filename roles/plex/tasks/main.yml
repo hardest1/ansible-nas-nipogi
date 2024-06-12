@@ -45,6 +45,9 @@
           homepage.icon: plex
           homepage.href: http://{{ ansible_nas_hostname }}:32400
           homepage.description: Media server
+          homepage.widget.type: plex
+          homepage.widget.url: "http://{{ ansible_nas_hostname }}:32400"
+          homepage.widget.key: "{{ plex_token }}"
   when: plex_enabled is true
 
 - name: Stop Plex
