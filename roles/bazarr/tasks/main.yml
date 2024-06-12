@@ -32,6 +32,14 @@
           traefik.http.routers.bazarr.tls.domains[0].main: "{{ ansible_nas_domain }}"
           traefik.http.routers.bazarr.tls.domains[0].sans: "*.{{ ansible_nas_domain }}"
           traefik.http.services.bazarr.loadbalancer.server.port: "6767"
+          homepage.group: "Download Tools"
+          homepage.name: "Bazarr"
+          homepage.icon: "bazarr"
+          homepage.href: "http://{{ ansible_nas_hostname }}:{{ bazarr_port }}"
+          homepage.description: Subs DVR
+          homepage.widget.type: bazarr
+          homepage.widget.url: "http://{{ ansible_nas_hostname }}:{{ bazarr_port }}"
+          homepage.widget.key: "{{ bazarr_token }}"
   when: bazarr_enabled is true
 
 - name: Stop Bazarr
