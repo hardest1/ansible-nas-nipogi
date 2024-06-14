@@ -90,6 +90,22 @@ samba_shares:
     browseable: yes
     path: "{{ downloads_root }}"
 
+  - name: backups
+    comment: "Backups"
+    guest_ok: yes
+    public: yes
+    writable: yes
+    browseable: yes
+    path: "{{ samba_shares_root }}/backups"
+
+  - name: fonts
+    comment: "Fonts"
+    guest_ok: yes
+    public: yes
+    writable: yes
+    browseable: yes
+    path: "{{ samba_shares_root }}/fonts"
+
   - name: movies
     comment: "Movies"
     guest_ok: yes
