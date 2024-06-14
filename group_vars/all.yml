@@ -138,6 +138,14 @@ samba_shares:
     browseable: yes
     path: "{{ samba_shares_root }}/games"
 
+  - name: software
+    comment: "Software"
+    guest_ok: yes
+    public: yes
+    writable: yes
+    browseable: yes
+    path: "{{ samba_shares_root }}/software"
+
   - name: photos
     comment: "Pictures"
     guest_ok: yes
