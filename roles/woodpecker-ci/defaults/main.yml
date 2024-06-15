@@ -6,8 +6,8 @@ woodpecker_ci_available_externally: false
 woodpecker_ci_data_directory: "{{ docker_home }}/woodpecker-ci"
 
 # network
-woodpecker_ci_port_ui: 8000
-woodpecker_ci_port_grpc: 9000
+woodpecker_ci_port_ui: 14934
+woodpecker_ci_port_grpc: 14933
 woodpecker_ci_address: "http://{{ ansible_nas_hostname }}:{{ woodpecker_ci_port_ui }}"
 woodpecker_ci_hostname: woodpecker-ci
 
