@@ -37,6 +37,7 @@ If you have a spare domain name you can configure applications to be accessible 
 * [Emby](https://emby.media/) - Media streaming and management
 * [ESPHome](https://esphome.io/) - ESP8266/ESP32 programming and management for home automation
 * [Firefly III](https://firefly-iii.org/) - Free and open source personal finance manager
+* [FlareSolverr](https://github.com/FlareSolverr/FlareSolverr) - FlareSolverr is a proxy server to bypass Cloudflare and DDoS-GUARD protection
 * [Fresh RSS](https://freshrss.org/) - Self-hosted RSS feed aggregator like Leed or Kriss Feed
 * [get_iplayer](https://github.com/get-iplayer/get_iplayer) - download programmes from BBC iplayer
 * [Gitea](https://gitea.io/en-us/) - Simple self-hosted GitHub clone
@@ -108,6 +109,7 @@ If you have a spare domain name you can configure applications to be accessible 
 * [Transmission](https://transmissionbt.com/) - BitTorrent client (with OpenVPN if you have a supported VPN provider)
 * [Ubooquity](http://vaemendis.net/ubooquity/) - Book and comic server
 * [uTorrent](https://www.utorrent.com/) - The best torrent downloading app for beginners
+* [Valheim Server](https://github.com/mbround18/valheim-docker) - Valheim dedicated gameserver manager.
 * [Virtual Desktop](https://github.com/RattyDAVE/docker-ubuntu-xrdp-mate-custom) - A virtual desktop running on your NAS.
 * [Wallabag](https://wallabag.org/) - Save and classify articles. Read them later.
 * [Watchtower](https://github.com/v2tec/watchtower) - Monitor your Docker containers and update them if a new version is available
