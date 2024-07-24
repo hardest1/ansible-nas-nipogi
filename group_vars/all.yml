@@ -71,6 +71,9 @@ documents_root: "{{ samba_shares_root }}/documents"
 # Where personal repos and code are stored
 code_root: "{{ samba_shares_root }}/code"
 
+# Where linux and other ISOs are stored
+iso_root: "{{ samba_shares_root }}/iso"
+
 # Where roms are stored
 roms_root: "{{ samba_shares_root }}/roms"
 
@@ -209,6 +212,14 @@ samba_shares:
     writable: yes
     browseable: yes
     path: "{{ code_root }}"
+
+  - name: iso
+    comment: "ISOs"
+    guest_ok: yes
+    public: yes
+    writable: yes
+    browseable: yes
+    path: "{{ iso_root }}"
 
   - name: pron
     comment: "Pr0n"
