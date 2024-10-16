@@ -31,6 +31,14 @@
           traefik.http.routers.sabnzbd.tls.domains[0].main: "{{ ansible_nas_domain }}"
           traefik.http.routers.sabnzbd.tls.domains[0].sans: "*.{{ ansible_nas_domain }}"
           traefik.http.services.sabnzbd.loadbalancer.server.port: "8080"
+          homepage.group: Download Tools
+          homepage.name: Sabnzbd
+          homepage.icon: sabnzbd
+          homepage.href: "http://{{ ansible_nas_hostname }}:{{ sabnzbd_port }}"
+          homepage.description: Usenet downloader
+          homepage.widget.type: sabnzbd
+          homepage.widget.url: "http://{{ ansible_nas_hostname }}:{{ sabnzbd_port }}"
+          homepage.widget.key: "{{ sabnzbd_token }}"
   when: sabnzbd_enabled is true
 
 - name: Stop Sabnzbd

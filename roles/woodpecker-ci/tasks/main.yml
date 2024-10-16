@@ -47,6 +47,11 @@
           traefik.http.routers.woodpecker_ci.tls.domains[0].main: "{{ ansible_nas_domain }}"
           traefik.http.routers.woodpecker_ci.tls.domains[0].sans: "*.{{ ansible_nas_domain }}"
           traefik.http.services.woodpecker_ci.loadbalancer.server.port: "8000"
+          homepage.group: Development
+          homepage.name: Woodpecker CI
+          homepage.icon: woodpecker-ci
+          homepage.href: "http://{{ ansible_nas_hostname }}:{{ woodpecker_ci_port_ui }}"
+          homepage.description: Continuous Integration
 
     - name: Create Woodpecker-CI agent container
       community.docker.docker_container:

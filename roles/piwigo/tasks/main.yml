@@ -59,6 +59,11 @@
           traefik.http.routers.piwigo.tls.domains[0].main: "{{ ansible_nas_domain }}"
           traefik.http.routers.piwigo.tls.domains[0].sans: "*.{{ ansible_nas_domain }}"
           traefik.http.services.piwigo.loadbalancer.server.port: "80"
+          homepage.group: Media
+          homepage.name: Piwigo
+          homepage.icon: piwigo
+          homepage.href: "http://{{ ansible_nas_hostname }}:{{ piwigo_port }}"
+          homepage.description: Photo management
   when: piwigo_enabled is true
 
 - name: Stop Piwigo

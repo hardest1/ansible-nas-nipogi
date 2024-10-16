@@ -58,8 +58,14 @@
           traefik.http.routers.gitea.tls.domains[0].main: "{{ ansible_nas_domain }}"
           traefik.http.routers.gitea.tls.domains[0].sans: "*.{{ ansible_nas_domain }}"
           traefik.http.services.gitea.loadbalancer.server.port: "3000"
-  when: gitea_enabled is true
-
+          homepage.group: Development
+          homepage.name: Gitea
+          homepage.icon: gitea
+          homepage.href: "http://{{ ansible_nas_hostname }}:{{ gitea_port_http }}"
+          homepage.description: Git Hub
+          homepage.widget.type: gitea
+          homepage.widget.url: "http://{{ ansible_nas_hostname }}:{{ gitea_port_http }}"
+          homepage.widget.key: "{{ gitea_token }}"
 - name: Stop Gitea
   block:
     - name: Stop Gitea

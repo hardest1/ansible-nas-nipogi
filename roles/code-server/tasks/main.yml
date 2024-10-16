@@ -25,6 +25,11 @@
           traefik.http.routers.code_server.tls.domains[0].main: "{{ ansible_nas_domain }}"
           traefik.http.routers.code_server.tls.domains[0].sans: "*.{{ ansible_nas_domain }}"
           traefik.http.services.code_server.loadbalancer.server.port: "8443"
+          homepage.group: Development
+          homepage.name: Code Server
+          homepage.icon: code
+          homepage.href: "http://{{ ansible_nas_hostname }}:{{ code_server_port }}"
+          homepage.description: VS Code Server
   when: code_server_enabled is true
 
 - name: Stop Code Server

@@ -76,6 +76,14 @@
           traefik.http.routers.paperless_ng.tls.domains[0].main: "{{ ansible_nas_domain }}"
           traefik.http.routers.paperless_ng.tls.domains[0].sans: "*.{{ ansible_nas_domain }}"
           traefik.http.services.paperless_ng.loadbalancer.server.port: "8000"
+          homepage.group: System
+          homepage.name: Paperless NG
+          homepage.icon: paperless-ng
+          homepage.href: "http://{{ ansible_nas_hostname }}:{{ paperless_ng_port }}"
+          homepage.description: Document buffer
+          homepage.widget.type: paperless-ng
+          homepage.widget.url: "http://{{ ansible_nas_hostname }}:{{ paperless_ng_port }}"
+          homepage.widget.key: "{{ paperless_ng_token }}"
   when: paperless_ng_enabled is true
 
 - name: Stop paperless_ng
