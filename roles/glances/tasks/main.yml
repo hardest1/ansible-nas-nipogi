@@ -32,6 +32,8 @@
           homepage.description: System stats
           homepage.widget.type: glances
           homepage.widget.url: "http://{{ ansible_nas_hostname }}:{{ glances_port_one }}"
+          homepage.widget.version: "4"
+          homepage.widget.metric: info
   when: glances_enabled is true
 
 - name: Stop Glances
