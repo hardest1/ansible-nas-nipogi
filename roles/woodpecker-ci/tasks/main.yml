@@ -74,7 +74,7 @@
           [webhook]
           ALLOWED_HOST_LIST=private
           SKIP_TLS_VERIFY=true
-      notify: restart
+      notify: restart gitea
       tags: molecule-notest
   when: woodpecker_ci_enabled is true
 
