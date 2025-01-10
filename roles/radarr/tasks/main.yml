@@ -14,7 +14,6 @@
         image: "{{ radarr_image_name }}:{{ radarr_image_version }}"
         pull: true
         volumes:
-          - "{{ nas_mount_volume }}"
           - "{{ radarr_movies_directory }}:/movies:rw"
           - "{{ radarr_download_directory }}:/downloads:rw"
           - "{{ radarr_data_directory }}:/config:rw"

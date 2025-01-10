@@ -14,7 +14,6 @@
         image: "{{ jellyfin_image_name }}:{{ jellyfin_image_version }}"
         pull: true
         volumes:
-          - "{{ nas_mount_volume }}"
           - "{{ jellyfin_config_directory }}:/config:rw"
           - "{{ jellyfin_movies_directory }}:/movies:{{ jellyfin_movies_permissions }}"
           - "{{ jellyfin_music_directory }}:/music:{{ jellyfin_music_permissions }}"
