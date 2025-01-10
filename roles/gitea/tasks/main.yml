@@ -58,7 +58,7 @@
           traefik.http.routers.gitea.tls.domains[0].main: "{{ ansible_nas_domain }}"
           traefik.http.routers.gitea.tls.domains[0].sans: "*.{{ ansible_nas_domain }}"
           traefik.http.services.gitea.loadbalancer.server.port: "3000"
-          homepage.group: Development
+          homepage.group: System
           homepage.name: Gitea
           homepage.icon: gitea
           homepage.href: "http://{{ ansible_nas_hostname }}:{{ gitea_port_http }}"
