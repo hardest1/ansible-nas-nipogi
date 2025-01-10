@@ -1,0 +1,21 @@
+---
+linkwarden_enabled: false
+linkwarden_available_externally: false
+linkwarden_data_directory: "{{ docker_home }}/linkwarden"
+linkwarden_port: "22412"
+linkwarden_hostname: "linkwarden"
+
+linkwarden_nextauth_secret: "1234huso"
+
+# specs
+linkwarden_memory: 1g
+linkwarden_pgsql_memory: 1g
+
+# docker
+linkwarden_container_name: linkwarden
+linkwarden_image_name: ghcr.io/linkwarden/linkwarden
+linkwarden_image_version: latest
+linkwarden_pgsql_container_name: linkwarden-postgres
+linkwarden_pgsql_image_name: postgres
+linkwarden_pgsql_image_version: "16-alpine"
+linkwarden_pgsql_password: "supersecret"

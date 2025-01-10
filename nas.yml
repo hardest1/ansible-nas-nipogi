@@ -213,6 +213,10 @@
       tags:
         - lidarr
 
+    - role: linkwarden
+      tags:
+        - linkwarden
+
     - role: loki
       tags:
         - loki
