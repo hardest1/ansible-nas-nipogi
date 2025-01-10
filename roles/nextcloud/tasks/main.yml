@@ -65,6 +65,8 @@
           homepage.description: Open source dropbox alternative
           homepage.widget.type: nextcloud
           homepage.widget.url: "http://{{ ansible_nas_hostname }}:{{ nextcloud_port }}"
+          homepage.widget.username: "{{nextcloud_username}}"
+          homepage.widget.password: "{{nextcloud_password}}"
   when: nextcloud_enabled is true
 
 - name: Stop Nextcloud
