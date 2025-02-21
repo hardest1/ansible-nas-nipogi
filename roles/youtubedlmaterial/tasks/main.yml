@@ -42,7 +42,7 @@
           traefik.http.services.youtubedlmaterial.loadbalancer.server.port: "17442"
           homepage.group: Download Tools
           homepage.name: YoutubeDL
-          homepage.icon: youtubedl
+          homepage.icon: youtube
           homepage.href: http://{{ ansible_nas_hostname }}:8998
           homepage.description: Youtube downloader
           
