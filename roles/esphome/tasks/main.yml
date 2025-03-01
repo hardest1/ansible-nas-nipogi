@@ -34,7 +34,9 @@
           homepage.group: System
           homepage.name: ESPHome
           homepage.icon: esphome
-          homepage.href: "http://{{ ansible_nas_hostname }}:6052"
+          homepage.href: "http://{{ ansible_nas_hostname }}:{{ esphome_port }}"
+          homepage.widget.type: esphome
+          homepage.widget.url: "http://{{ ansible_nas_hostname }}:{{ esphome_port }}"
   when: esphome_enabled is true
 
 - name: Stop EspHome
