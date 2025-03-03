@@ -34,7 +34,7 @@
           homepage.group: System
           homepage.name: ESPHome
           homepage.icon: esphome
-          homepage.href: "http://{{ ansible_nas_hostname }}:{{ esphome_port }}"
+          homepage.href: "https://{{ esphome_hostname }}.{{ ansible_nas_domain }}"
           homepage.widget.type: esphome
           homepage.widget.url: "http://{{ ansible_nas_hostname }}:{{ esphome_port }}"
   when: esphome_enabled is true
