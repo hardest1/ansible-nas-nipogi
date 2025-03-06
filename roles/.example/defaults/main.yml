@@ -1,0 +1,23 @@
+---
+example_enabled: false
+example_available_externally: false
+
+# directories
+example_data_directory: "{{ docker_home }}/example/config"
+example_download_directory: "{{ downloads_root }}"
+
+# uid / gid
+example_user_id: "1000"
+example_group_id: "1000"
+
+# network
+example_port: "6969"
+example_hostname: "example"
+
+# docker
+example_container_name: "example"
+example_image_name: "hotio/example"
+example_image_version: "latest"
+
+# specs
+example_memory: 1g
