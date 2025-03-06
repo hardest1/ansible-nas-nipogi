@@ -1,0 +1,50 @@
+---
+- name: Start ErsatzTV
+  block:
+    - name: Create ErsatzTV Directories
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+      with_items:
+        - "{{ ersatztv_data_directory }}"
+
+    - name: ErsatzTV
+      community.docker.docker_container:
+        name: "{{ ersatztv_container_name }}"
+        image: "{{ ersatztv_image_name }}:{{ ersatztv_image_version }}"
+        pull: true
+        mounts:
+          - type: tmpfs
+            target: "/root/.local/share/etv-transcode"
+        volumes:
+          - "{{ nas_mount }}"
+          - "{{ ersatztv_data_directory }}:/root/.local/share/ersatztv:rw"
+        ports:
+          - "{{ ersatztv_port }}:8409"
+        env:
+          TZ: "{{ ansible_nas_timezone }}"
+          PUID: "{{ ersatztv_user_id }}"
+          PGID: "{{ ersatztv_group_id }}"
+        restart_policy: unless-stopped
+        memory: "{{ ersatztv_memory }}"
+        labels:
+          traefik.enable: "{{ ersatztv_available_externally | string }}"
+          traefik.http.routers.ersatztv.rule: "Host(`{{ ersatztv_hostname }}.{{ ansible_nas_domain }}`)"
+          traefik.http.routers.ersatztv.tls.certresolver: "letsencrypt"
+          traefik.http.routers.ersatztv.tls.domains[0].main: "{{ ansible_nas_domain }}"
+          traefik.http.routers.ersatztv.tls.domains[0].sans: "*.{{ ansible_nas_domain }}"
+          traefik.http.services.ersatztv.loadbalancer.server.port: "8409"
+          homepage.group: "Media"
+          homepage.name: "ErsatzTV"
+          homepage.icon: "ersatztv"
+          homepage.href: "http://{{ ansible_nas_hostname }}:{{ ersatztv_port }}"
+          homepage.description: Custom TV
+  when: ersatztv_enabled is true
+
+- name: Stop ersatztv
+  block:
+    - name: Stop ersatztv
+      community.docker.docker_container:
+        name: "{{ ersatztv_container_name }}"
+        state: absent
+  when: ersatztv_enabled is false

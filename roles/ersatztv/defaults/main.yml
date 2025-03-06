@@ -1,0 +1,22 @@
+---
+ersatztv_enabled: false
+ersatztv_available_externally: false
+
+# directories
+ersatztv_data_directory: "{{ docker_home }}/ersatztv/config"
+
+# uid / gid
+ersatztv_user_id: "1000"
+ersatztv_group_id: "1000"
+
+# network
+ersatztv_port: "8409"
+ersatztv_hostname: "ersatztv"
+
+# docker
+ersatztv_container_name: "ersatztv"
+ersatztv_image_name: "jasongdove/ersatztv"
+ersatztv_image_version: "latest"
+
+# specs
+ersatztv_memory: 1g
