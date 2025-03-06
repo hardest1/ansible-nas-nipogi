@@ -26,7 +26,7 @@
         image: "{{ homepage_image_name }}:{{ homepage_image_tag }}"
         pull: false
         volumes:
-          - "{{nas_mount_homepage_diskspace_widget}}"
+          - "{{nas_mount}}"
           - "{{ homepage_data_directory }}:/app/config"
           - "/var/run/docker.sock:/var/run/docker.sock"
         env:
