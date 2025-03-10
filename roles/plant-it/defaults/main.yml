@@ -1,0 +1,37 @@
+---
+plant_it_enabled: false
+plant_it_available_externally: false
+
+# directories
+plant_it_data_directory: "{{ docker_home }}/plant-it/config"
+plant_it_upload_directory: "{{ nfs_shares_root }}/dump/plant-it"
+
+# uid / gid
+plant_it_user_id: "1000"
+plant_it_group_id: "1000"
+
+# network
+plant_it_port_frontend: "9200"
+plant_it_port_backend: "9201"
+plant_it_hostname: "plant-it"
+
+plant_it_jwt_secret: "8fg27fvs8fg8h2124ed6fdfg"
+plant_it_floracodex_key: ""
+
+# docker
+plant_it_container_name: "plant_it"
+plant_it_image_name: "msdeluise/plant-it-server"
+plant_it_image_version: "latest"
+plant_it_memory: 1g
+
+# mysql
+plant_it_mysql_container_name: "plant_it-mysql"
+plant_it_mysql_image_name: "mysql"
+plant_it_mysql_image_version: "8"
+plant_it_mysql_memory: 1g
+
+# redis
+plant_it_redis_container_name: "plant_it-redis"
+plant_it_redis_image_name: "redis"
+plant_it_redis_image_version: "7.2.1"
+plant_it_redis_memory: 1g

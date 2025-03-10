@@ -1,0 +1,97 @@
+---
+- name: Start plant_it
+  block:
+    - name: Create plant_it Directories
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+      with_items:
+        - "{{ plant_it_upload_directory }}"
+        - "{{ plant_it_data_directory }}"
+
+    - name: Create Redis container for Plant It
+      community.docker.docker_container:
+        name: "{{ plant_it_redis_container_name }}"
+        image: "{{ plant_it_redis_image_name }}:{{ plant_it_redis_image_version }}"
+        pull: true
+        restart_policy: always
+        memory: "{{ plant_it_redis_memory }}"
+
+    - name: Create MySQL container for Plant It
+      community.docker.docker_container:
+        name: "{{ plant_it_mysql_container_name }}"
+        image: "{{ plant_it_mysql_image_name }}:{{ plant_it_mysql_image_version }}"
+        pull: true
+        volumes:
+          - "{{ plant_it_data_directory }}/mysql:/var/lib/mysql:rw"
+        env:
+          MYSQL_DATABASE: "plant_it"
+          MYSQL_USER: "plant_it"
+          MYSQL_PASSWORD: "plant_it"
+          MYSQL_ROOT_PASSWORD: "plant_it"
+          MYSQL_USERNAME: "plant_it"
+          MYSQL_PSW: "plant_it"
+          MYSQL_PORT: "3306"
+          CACHE_TTL: "86400"
+          CACHE_HOST: "{{plant_it_redis_container_name}}"
+          CACHE_PORT: "6379"
+        restart_policy: unless-stopped
+        memory: "{{ plant_it_mysql_memory }}"
+
+    - name: Create plantit docker container
+      community.docker.docker_container:
+        name: "{{ plant_it_container_name }}"
+        image: "{{ plant_it_image_name }}:{{ plant_it_image_version }}"
+        pull: true
+        volumes:
+          - "{{ plant_it_upload_directory }}:/upload:rw"
+        ports:
+          - "{{ plant_it_port_frontend }}:3000"
+          - "{{ plant_it_port_backend }}:8080"
+        links:
+          - plant_it-mysql:db
+          - plant_it-redis:cache
+        env:
+          TZ: "{{ ansible_nas_timezone }}"
+          PUID: "{{ plant_it_user_id }}"
+          PGID: "{{ plant_it_group_id }}"
+          UMASK: "002"
+          MYSQL_HOST: "db"
+          MYSQL_PORT: "3306"
+          MYSQL_USERNAME: "plant_it"
+          MYSQL_PSW: "plant_it"
+          MYSQL_DATABASE: "plant_it"
+          MYSQL_USER: "plant_it"
+          MYSQL_PASSWORD: "plant_it"
+          MYSQL_ROOT_PASSWORD: "plant_it"
+          JWT_SECRET: "{{plant_it_jwt_secret}}"
+          JWT_EXP: "1"
+          USERS_LIMIT: "1"
+          UPLOAD_DIR: "/upload"
+          API_PORT: "8080"
+          FLORACODEX_KEY: "{{plant_it_floracodex_key}}"
+          LOG_LEVEL: "DEBUG"
+          ALLOWED_ORIGINS: "*"
+          CACHE_TTL: "86400"
+          CACHE_HOST: "cache"
+          CACHE_PORT: "6379"
+        restart_policy: unless-stopped
+        memory: "{{ plant_it_memory }}"
+        labels:
+          homepage.group: "Monitoring"
+          homepage.name: "Plant It"
+          homepage.icon: "plant-it"
+          homepage.href: "http://{{ ansible_nas_hostname }}:{{ plant_it_port_frontend }}"
+          homepage.description: Plant monitor
+          homepage.widget.type: plantit
+          homepage.widget.url: "http://{{ ansible_nas_hostname }}:{{ plant_it_port_backend }}"
+          homepage.widget.key: "{{ plant_it_token }}"
+  when: plant_it_enabled is true
+
+- name: Stop plant_it
+  block:
+    - name: Stop plant_it
+      community.docker.docker_container:
+        name: "{{ plant_it_container_name }}"
+        state: absent
+  when: plant_it_enabled is false

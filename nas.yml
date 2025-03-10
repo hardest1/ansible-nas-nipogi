@@ -321,6 +321,10 @@
       tags:
         - piwigo
 
+    - role: plant-it
+      tags:
+        - plant-it
+
     - role: plex
       tags:
         - plex
