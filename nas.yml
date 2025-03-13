@@ -193,6 +193,10 @@
       tags:
         - homepage
 
+    - role: influxdb2
+      tags:
+        - influxdb2
+
     - role: jackett
       tags:
         - jackett

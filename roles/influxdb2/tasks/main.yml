@@ -1,0 +1,46 @@
+---
+- name: Start influxdb2
+  block:
+    - name: Create influxdb2 Directories
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+      with_items:
+        - "{{ influxdb2_config_directory }}"
+        - "{{ influxdb2_data_directory }}"
+
+    - name: influxdb2 Docker Container
+      community.docker.docker_container:
+        name: "{{ influxdb2_container_name }}"
+        image: influxdb:2
+        pull: true
+        volumes:
+          - "{{ influxdb2_config_directory }}:/etc/influxdb2:rw"
+          - "{{ influxdb2_data_directory }}:/var/lib/influxdb2:rw"
+        ports:
+          - "{{ influxdb2_port }}:8086"
+        env:
+          TZ: "{{ ansible_nas_timezone }}"
+        restart_policy: unless-stopped
+        memory: "{{ influxdb2_memory }}"
+        labels:
+          traefik.enable: "{{ influxdb2_available_externally | string }}"
+          traefik.http.routers.influxdb2.rule: "Host(`influxdb2.{{ ansible_nas_domain }}`)"
+          traefik.http.routers.influxdb2.tls.certresolver: "letsencrypt"
+          traefik.http.routers.influxdb2.tls.domains[0].main: "{{ ansible_nas_domain }}"
+          traefik.http.routers.influxdb2.tls.domains[0].sans: "*.{{ ansible_nas_domain }}"
+          traefik.http.services.influxdb2.loadbalancer.server.port: "8086"
+          homepage.group: Monitoring
+          homepage.name: InfluxDB2
+          homepage.icon: influxdb
+          homepage.href: "http://{{ ansible_nas_hostname }}:{{ influxdb2_port }}"
+          homepage.description: Timeseries DB
+  when: influxdb2_enabled is true
+
+- name: Stop influxdb2
+  block:
+    - name: Stop influxdb2
+      community.docker.docker_container:
+        name: "{{ influxdb2_container_name }}"
+        state: absent
+  when: influxdb2_enabled is false

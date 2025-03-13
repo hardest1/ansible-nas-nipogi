@@ -1,0 +1,16 @@
+---
+influxdb2_enabled: false
+influxdb2_available_externally: false
+
+# directories
+influxdb2_config_directory: "{{ docker_home }}/influxdb2/config"
+influxdb2_data_directory: "{{ docker_home }}/influxdb2/data"
+
+# network
+influxdb2_port: "8086"
+
+# specs
+influxdb2_memory: 1g
+
+# docker
+influxdb2_container_name: influxdb2
