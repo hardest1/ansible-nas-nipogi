@@ -63,4 +63,8 @@
       community.docker.docker_container:
         name: "{{ linkwarden_container_name }}"
         state: absent
+    - name: Stop Linkwarden Postgres
+      community.docker.docker_container:
+        name: "{{ linkwarden_pgsql_container_name }}"
+        state: absent
   when: linkwarden_enabled is false
