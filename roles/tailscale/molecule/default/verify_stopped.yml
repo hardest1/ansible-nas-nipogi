@@ -1,0 +1,29 @@
+---
+- name: Verify
+  hosts: all
+  gather_facts: false
+  tasks:
+    - ansible.builtin.include_vars:
+        file: ../../defaults/main.yml
+
+    - name: Try and stop and remove tailscale
+      community.docker.docker_container:
+        name: "{{ tailscale_container_name }}"
+        state: absent
+      register: result
+
+    - name: Check if tailscale is stopped
+      ansible.builtin.assert:
+        that:
+          - not result.changed
+
+    - name: Try and stop and remove tailscale-nginx
+      community.docker.docker_container:
+        name: "{{ tailscale_container_name }}-nginx"
+        state: absent
+      register: result
+
+    - name: Check if tailscale-nginx is stopped
+      ansible.builtin.assert:
+        that:
+          - not result.changed

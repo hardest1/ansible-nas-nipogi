@@ -1,0 +1,23 @@
+---
+tailscale_enabled: false
+tailscale_available_externally: false
+
+# directories
+tailscale_data_directory: "{{ docker_home }}/tailscale/data"
+tailscale_config_directory: "{{ docker_home }}/tailscale/config"
+
+# uid / gid
+tailscale_user_id: "1000"
+tailscale_group_id: "1000"
+
+# network
+tailscale_port: ""
+tailscale_hostname: "tailscale"
+
+# docker
+tailscale_container_name: "tailscale"
+tailscale_image_name: "tailscale/tailscale"
+tailscale_image_version: "latest"
+
+# specs
+tailscale_memory: 1g

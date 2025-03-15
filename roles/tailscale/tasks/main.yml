@@ -1,0 +1,76 @@
+---
+- name: Start tailscale
+  block:
+    - name: Create tailscale Directories
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+      with_items:
+        - "{{ tailscale_config_directory }}"
+        - "{{ tailscale_data_directory }}"
+
+    - name: tailscale
+      community.docker.docker_container:
+        name: "{{ tailscale_container_name }}"
+        image: "{{ tailscale_image_name }}:{{ tailscale_image_version }}"
+        pull: true
+        devices:
+          - "/dev/net/tun:/dev/net/tun"
+        capabilities: 
+          - "net_admin"
+        volumes:
+          - "{{ tailscale_config_directory }}:/config:rw"
+          - "{{ tailscale_data_directory }}:/var/lib/tailscale:rw"
+        # ports:
+        env:
+          TS_AUTHKEY: "{{tailscale_oauth_secret}}?ephemeral=false"
+          TS_EXTRA_ARGS: "--advertise-tags=tag:container --advertise-exit-node"
+          TS_STATE_DIR: "/var/lib/tailscale"
+          TS_USERSPACE: "false"
+          TS_ACCEPT_DNS: "true"
+          TS_AUTH_ONCE: "true"
+          TS_HOSTNAME: "{{ansible_nas_hostname}}"
+          TZ: "{{ ansible_nas_timezone }}"
+          PUID: "{{ tailscale_user_id }}"
+          PGID: "{{ tailscale_group_id }}"
+          UMASK: "002"
+        restart_policy: unless-stopped
+        memory: "{{ tailscale_memory }}"
+        labels:
+          #traefik.enable: "{{ tailscale_available_externally | string }}"
+          #traefik.http.routers.tailscale.rule: "Host(`{{ tailscale_hostname }}.{{ ansible_nas_domain }}`)"
+          #traefik.http.routers.tailscale.tls.certresolver: "letsencrypt"
+          #traefik.http.routers.tailscale.tls.domains[0].main: "{{ ansible_nas_domain }}"
+          #traefik.http.routers.tailscale.tls.domains[0].sans: "*.{{ ansible_nas_domain }}"
+          #traefik.http.services.tailscale.loadbalancer.server.port: "6969"
+          homepage.group: "System"
+          homepage.name: "Tailscale"
+          homepage.icon: "tailscale"
+          homepage.href: "https://login.tailscale.com/admin/machines"
+          homepage.description: VPN Ultra
+          homepage.widget.type: tailscale
+          homepage.widget.deviceid: "{{ tailscale_deviceid }}"
+          homepage.widget.key: "{{ tailscale_token }}"
+  
+#    - name: Create nginx for tailscale
+#      community.docker.docker_container:
+#        name: "{{ tailscale_container_name }}-nginx"
+#        image: "nginx"
+#        pull: true
+#        restart_policy: unless-stopped
+#        memory: "1g"
+#        network_mode: "container:{{ tailscale_container_name }}"
+  when: tailscale_enabled is true
+
+
+- name: Stop tailscale
+  block:
+    - name: Stop tailscale
+      community.docker.docker_container:
+        name: "{{ tailscale_container_name }}"
+        state: absent
+#    - name: Stop tailscale-nginx
+#      community.docker.docker_container:
+#        name: "tailscale-nginx"
+#        state: absent
+  when: tailscale_enabled is false
