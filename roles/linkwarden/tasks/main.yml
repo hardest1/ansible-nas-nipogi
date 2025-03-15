@@ -31,7 +31,7 @@
         ports:
           - "{{ linkwarden_port }}:3000"
         links:
-          - linkwarden-postgres:db
+          - "{{ linkwarden_pgsql_container_name }}:db"
         volumes:
           - "{{ linkwarden_data_directory }}:/data/data:rw"
         env:
