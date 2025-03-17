@@ -96,6 +96,6 @@
         state: absent
     - name: Stop plant_it mysql
       community.docker.docker_container:
-        name: "{{ {{ plant_it_mysql_container_name }} }}"
+        name: "{{ plant_it_mysql_container_name }}"
         state: absent
   when: plant_it_enabled is false

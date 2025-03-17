@@ -2,6 +2,8 @@
 plant_it_enabled: false
 plant_it_available_externally: false
 
+plant_it_token: ""
+
 # directories
 plant_it_data_directory: "{{ docker_home }}/plant-it/config"
 plant_it_upload_directory: "{{ nfs_shares_root }}/dump/plant-it"
