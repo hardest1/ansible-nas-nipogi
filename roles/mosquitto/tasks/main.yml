@@ -31,6 +31,12 @@
         restart_policy: unless-stopped
         restart: "{{ mosquitto_conf is changed }}"
         memory: 1g
+        labels:
+          homepage.group: "Smart Home"
+          homepage.name: Mosquitto
+          homepage.icon: mosquitto
+          homepage.href: "http://{{ ansible_nas_hostname }}:9001"
+          homepage.description: MQTT Broker
   when: mosquitto_enabled is true
 
 - name: Stop Mosquitto
