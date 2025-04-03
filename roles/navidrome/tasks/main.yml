@@ -16,6 +16,7 @@
         image: "{{ navidrome_image_name }}:{{ navidrome_image_version }}"
         pull: true
         volumes:
+          - "{{ nas_mount }}"
           - "{{ navidrome_data_directory }}/data:/navidrome/data:rw"
           - "{{ navidrome_music_directory }}:/navidrome/music:rw"
         ports:
@@ -35,6 +36,11 @@
           traefik.http.routers.navidrome.tls.domains[0].main: "{{ ansible_nas_domain }}"
           traefik.http.routers.navidrome.tls.domains[0].sans: "*.{{ ansible_nas_domain }}"
           traefik.http.services.navidrome.loadbalancer.server.port: "4533"
+          homepage.group: Media
+          homepage.icon: navidrome
+          homepage.name: Navidrome
+          homepage.href: "http://{{ ansible_nas_hostname }}:4533"
+          homepage.description: Music streaming
   when: navidrome_enabled is true
 
 - name: Stop Navidrome

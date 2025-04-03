@@ -15,6 +15,7 @@
         image: airsonic/airsonic:latest
         pull: true
         volumes:
+          - "{{ nas_mount }}"
           - "{{ airsonic_data_directory }}/data:/airsonic/data:rw"
           - "{{ airsonic_data_directory }}/playlists:/airsonic/playlists:rw"
           - "{{ airsonic_music_directory }}:/airsonic/music:rw"
@@ -30,6 +31,11 @@
           traefik.http.routers.airsonic.tls.domains[0].main: "{{ ansible_nas_domain }}"
           traefik.http.routers.airsonic.tls.domains[0].sans: "*.{{ ansible_nas_domain }}"
           traefik.http.services.airsonic.loadbalancer.server.port: "4040"
+          homepage.group: Media
+          homepage.icon: airsonic
+          homepage.name: Airsonic
+          homepage.href: "http://{{ ansible_nas_hostname }}:4040"
+          homepage.description: Music streaming
   when: airsonic_enabled is true
 
 - name: Stop Airsonic
