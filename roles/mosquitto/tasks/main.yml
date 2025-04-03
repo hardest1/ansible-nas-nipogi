@@ -32,7 +32,7 @@
         restart: "{{ mosquitto_conf is changed }}"
         memory: 1g
         labels:
-          homepage.group: "Smart Home"
+          homepage.group: "System"
           homepage.name: Mosquitto
           homepage.icon: mosquitto
           homepage.href: "http://{{ ansible_nas_hostname }}:9001"
