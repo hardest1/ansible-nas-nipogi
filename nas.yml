@@ -57,6 +57,10 @@
       tags:
         - airsonic
 
+    - role: apcupsd
+      tags:
+        - apcupsd
+
     - role: bazarr
       tags:
         - bazarr
@@ -84,6 +88,10 @@
     - role: cloudflare_ddns
       tags:
         - cloudflare_ddns
+
+    - role: couchdb
+      tags:
+        - couchdb
 
     - role: code-server
       tags:
@@ -196,6 +204,10 @@
     - role: influxdb2
       tags:
         - influxdb2
+
+    - role: ispyagentdvr
+      tags:
+        - ispyagentdvr
 
     - role: jackett
       tags:
