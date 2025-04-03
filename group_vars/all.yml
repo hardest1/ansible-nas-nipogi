@@ -71,6 +71,9 @@ documents_root: "{{ samba_shares_root }}/documents"
 # Where personal repos and code are stored
 code_root: "{{ samba_shares_root }}/code"
 
+# Where CCTV recordings are stored
+cctv_root: "{{ samba_shares_root }}/cctv"
+
 # Where linux and other ISOs are stored
 iso_root: "{{ samba_shares_root }}/iso"
 
@@ -212,6 +215,14 @@ samba_shares:
     writable: yes
     browseable: yes
     path: "{{ code_root }}"
+
+  - name: cctv
+    comment: "CCTV Recordings"
+    guest_ok: yes
+    public: yes
+    writable: yes
+    browseable: yes
+    path: "{{ cctv_root }}"
 
   - name: iso
     comment: "ISOs"
