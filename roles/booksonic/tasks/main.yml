@@ -13,9 +13,10 @@
     - name: Booksonic Docker Container
       community.docker.docker_container:
         name: "{{ booksonic_container_name }}"
-        image: linuxserver/booksonic-air:latest
+        image: linuxserver/booksonic-air:amd64-2201.1.0 # latest doesnt work
         pull: true
         volumes:
+          - "{{ nas_mount }}"
           - "{{ booksonic_data_directory }}/data:/booksonic/data:rw"
           - "{{ booksonic_data_directory }}/playlists:/booksonic/playlists:rw"
           - "{{ booksonic_audiobooks_directory }}:/booksonic/audiobooks:rw"
@@ -35,6 +36,11 @@
           traefik.http.routers.booksonic.tls.domains[0].main: "{{ ansible_nas_domain }}"
           traefik.http.routers.booksonic.tls.domains[0].sans: "*.{{ ansible_nas_domain }}"
           traefik.http.services.booksonic.loadbalancer.server.port: "4040"
+          homepage.group: Media
+          homepage.icon: booksonic
+          homepage.name: Booksonic Air
+          homepage.href: "http://{{ ansible_nas_hostname }}:4041"
+          homepage.description: Audiobook streaming
   when: booksonic_enabled is true
 
 - name: Stop Booksonic
