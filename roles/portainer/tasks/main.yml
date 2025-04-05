@@ -34,7 +34,7 @@
           traefik.http.routers.portainer.tls.domains[0].sans: "*.{{ ansible_nas_domain }}"
           traefik.http.services.portainer.loadbalancer.server.port: "9443"
           traefik.http.routers.portainer.middlewares: "portainer-ipwhitelist@docker"
-          traefik.http.middlewares.portainer-ipwhitelist.ipwhitelist.sourcerange: "{{ portainer_ip_whitelist }}"
+          traefik.http.middlewares.portainer-ipwhitelist.ipwhitelist.sourcerange: "{{ portainer_ip_allowlist }}"
           homepage.group: Monitoring
           homepage.name: Portainer
           homepage.icon: portainer
