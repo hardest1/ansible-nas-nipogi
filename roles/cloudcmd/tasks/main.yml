@@ -32,6 +32,7 @@
           traefik.http.routers.cloudcmd.tls.domains[0].sans: "*.{{ ansible_nas_domain }}"
           traefik.http.services.cloudcmd.loadbalancer.server.port: "8000"
           homepage.group: System
+          homepage.icon: cloudcmd
           homepage.name: CloudCMD
           homepage.href: "http://{{ ansible_nas_hostname }}:7373"
           homepage.description: File manager
