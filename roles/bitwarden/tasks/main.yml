@@ -45,7 +45,12 @@
           traefik.http.routers.bitwarden-ws.service: "bitwarden-ws"
           traefik.http.routers.bitwarden-ws.middlewares: "bitwarden-ipallowlist@docker"
           traefik.http.services.bitwarden-ws.loadbalancer.server.port: "3012"
-          traefik.http.middlewares.bitwarden-ipallowlist.ipallowlist.sourcerange: "{{ bitwarden_ip_allowlist }}"
+          traefik.http.middlewares.bitwarden-ipallowlist.ipallowlist.sourcerange: "{{ bitwarden_ip_allowlist }}"      
+          homepage.group: System
+          homepage.icon: vaultwarden
+          homepage.name: Vaultwarden
+          homepage.href: "http://{{ ansible_nas_hostname }}:{{ bitwarden_port_a }}"
+          homepage.description: Password manager
         memory: "{{ bitwarden_memory }}"
         restart_policy: unless-stopped
 
