@@ -30,7 +30,12 @@
           traefik.http.routers.couchdb.tls.certresolver: "letsencrypt"
           traefik.http.routers.couchdb.tls.domains[0].main: "{{ ansible_nas_domain }}"
           traefik.http.routers.couchdb.tls.domains[0].sans: "*.{{ ansible_nas_domain }}"
-          traefik.http.services.couchdb.loadbalancer.server.port: "5984"
+          traefik.http.services.couchdb.loadbalancer.server.port: "5984"          
+          homepage.group: System
+          homepage.icon: couchdb
+          homepage.name: CouchDB
+          homepage.href: "http://{{ ansible_nas_hostname }}:5984"
+          homepage.description: Database
   when: couchdb_enabled is true
 
 - name: Stop CouchDB
