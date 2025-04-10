@@ -31,7 +31,7 @@
           traefik.http.routers.airsonic.tls.domains[0].main: "{{ ansible_nas_domain }}"
           traefik.http.routers.airsonic.tls.domains[0].sans: "*.{{ ansible_nas_domain }}"
           traefik.http.services.airsonic.loadbalancer.server.port: "4040"
-          homepage.group: Media
+          homepage.group: Streaming
           homepage.icon: airsonic
           homepage.name: Airsonic
           homepage.href: "http://{{ ansible_nas_hostname }}:4040"

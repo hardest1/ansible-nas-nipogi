@@ -58,7 +58,7 @@
           traefik.http.routers.transmission_openvpn.tls.domains[0].main: "{{ ansible_nas_domain }}"
           traefik.http.routers.transmission_openvpn.tls.domains[0].sans: "*.{{ ansible_nas_domain }}"
           traefik.http.services.transmission_openvpn.loadbalancer.server.port: "9091"
-          homepage.group: Download Tools
+          homepage.group: Arr
           homepage.name: Transmission
           homepage.icon: transmission
           homepage.href: "http://{{ ansible_nas_hostname }}:9091"

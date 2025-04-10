@@ -32,7 +32,7 @@
           traefik.http.routers.esphome.tls.domains[0].main: "{{ ansible_nas_domain }}"
           traefik.http.routers.esphome.tls.domains[0].sans: "*.{{ ansible_nas_domain }}"
           traefik.http.services.esphome.loadbalancer.server.port: "6052"
-          homepage.group: System
+          homepage.group: "Smart Home"
           homepage.name: ESPHome
           homepage.icon: esphome
           homepage.href: "https://{{ esphome_hostname }}.{{ ansible_nas_domain }}"

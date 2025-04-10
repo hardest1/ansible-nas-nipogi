@@ -39,7 +39,7 @@
           traefik.http.routers.plex.tls.domains[0].main: "{{ ansible_nas_domain }}"
           traefik.http.routers.plex.tls.domains[0].sans: "*.{{ ansible_nas_domain }}"
           traefik.http.services.plex.loadbalancer.server.port: "32400"
-          homepage.group: Media
+          homepage.group: Streaming
           homepage.name: Plex
           homepage.icon: plex
           homepage.href: http://{{ ansible_nas_hostname }}:32400

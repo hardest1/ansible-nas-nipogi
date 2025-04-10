@@ -33,7 +33,7 @@
           traefik.http.routers.whisparr.tls.domains[0].main: "{{ ansible_nas_domain }}"
           traefik.http.routers.whisparr.tls.domains[0].sans: "*.{{ ansible_nas_domain }}"
           traefik.http.services.whisparr.loadbalancer.server.port: "6969"
-          homepage.group: "Download Tools"
+          homepage.group: "Arr"
           homepage.name: "Whisparr"
           homepage.icon: "whisparr"
           homepage.href: "http://{{ ansible_nas_hostname }}:{{ whisparr_port }}"

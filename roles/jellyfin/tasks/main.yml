@@ -36,7 +36,7 @@
           traefik.http.routers.jellyfin.tls.domains[0].main: "{{ ansible_nas_domain }}"
           traefik.http.routers.jellyfin.tls.domains[0].sans: "*.{{ ansible_nas_domain }}"
           traefik.http.services.jellyfin.loadbalancer.server.port: "8096"
-          homepage.group: Media
+          homepage.group: Streaming
           homepage.name: Jellyfin
           homepage.icon: jellyfin.png
           homepage.href: "http://{{ ansible_nas_hostname }}:{{ jellyfin_port_http }}"

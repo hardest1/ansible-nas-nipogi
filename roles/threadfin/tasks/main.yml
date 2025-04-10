@@ -20,7 +20,7 @@
         restart_policy: unless-stopped
         memory: "{{ threadfin_memory }}"
         labels:
-          homepage.group: Media
+          homepage.group: Streaming
           homepage.name: Threadfin
           homepage.icon: xteve
           homepage.href: "http://{{ ansible_nas_hostname }}:{{ threadfin_port }}"

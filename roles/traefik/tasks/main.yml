@@ -30,7 +30,7 @@
         memory: "{{ traefik_memory }}"
         recreate: "{{ template_config is changed }}"
         labels:
-          homepage.group: System
+          homepage.group: Network
           homepage.name: Traefik
           homepage.icon: traefik
           homepage.href: "http://{{ ansible_nas_hostname }}:{{ traefik_port_ui }}"

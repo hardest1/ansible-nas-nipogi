@@ -31,7 +31,7 @@
           traefik.http.routers.overseerr.tls.domains[0].main: "{{ ansible_nas_domain }}"
           traefik.http.routers.overseerr.tls.domains[0].sans: "*.{{ ansible_nas_domain }}"
           traefik.http.services.overseerr.loadbalancer.server.port: "5055"
-          homepage.group: Media
+          homepage.group: Streaming
           homepage.name: Overseerr
           homepage.icon: overseerr
           homepage.href: "http://{{ ansible_nas_hostname }}:{{ overseerr_webui_port }}"

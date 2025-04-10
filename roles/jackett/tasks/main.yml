@@ -29,7 +29,7 @@
           traefik.http.routers.jackett.tls.domains[0].main: "{{ ansible_nas_domain }}"
           traefik.http.routers.jackett.tls.domains[0].sans: "*.{{ ansible_nas_domain }}"
           traefik.http.services.jackett.loadbalancer.server.port: "9117"
-          homepage.group: Download Tools
+          homepage.group: Arr
           homepage.name: Jackett
           homepage.icon: jackett
           homepage.href: http://{{ ansible_nas_hostname }}:{{ jackett_port }}

@@ -32,7 +32,7 @@
           traefik.http.routers.deluge.tls.domains[0].main: "{{ ansible_nas_domain }}"
           traefik.http.routers.deluge.tls.domains[0].sans: "*.{{ ansible_nas_domain }}"
           traefik.http.services.deluge.loadbalancer.server.port: "8112"
-          homepage.group: Download Tools
+          homepage.group: Arr
           homepage.name: Deluge
           homepage.icon: deluge.png
           homepage.href: "http://{{ ansible_nas_hostname }}:{{ deluge_port }}"

@@ -78,7 +78,7 @@
         restart_policy: unless-stopped
         memory: "{{ plant_it_memory }}"
         labels:
-          homepage.group: "Monitoring"
+          homepage.group: "Smart Home"
           homepage.name: "Plant It"
           homepage.icon: "plant-it"
           homepage.href: "http://{{ ansible_nas_hostname }}:{{ plant_it_port_frontend }}"

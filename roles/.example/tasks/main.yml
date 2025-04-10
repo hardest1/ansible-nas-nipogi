@@ -33,7 +33,7 @@
           traefik.http.routers.example.tls.domains[0].main: "{{ ansible_nas_domain }}"
           traefik.http.routers.example.tls.domains[0].sans: "*.{{ ansible_nas_domain }}"
           traefik.http.services.example.loadbalancer.server.port: "6969"
-          homepage.group: "Download Tools"
+          homepage.group: "Arr"
           homepage.name: "example"
           homepage.icon: "example"
           homepage.href: "http://{{ ansible_nas_hostname }}:{{ example_port }}"

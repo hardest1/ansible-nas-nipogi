@@ -28,7 +28,7 @@
           traefik.http.routers.flaresolverr.tls.domains[0].main: "{{ ansible_nas_domain }}"
           traefik.http.routers.flaresolverr.tls.domains[0].sans: "*.{{ ansible_nas_domain }}"
           traefik.http.services.flaresolverr.loadbalancer.server.port: "8191"
-          homepage.group: Download Tools
+          homepage.group: Arr
           homepage.name: FlareSolverr
           homepage.icon: flaresolverr
           homepage.href: "http://{{ ansible_nas_hostname }}:{{ flaresolverr_port }}"

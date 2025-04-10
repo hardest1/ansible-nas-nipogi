@@ -30,7 +30,7 @@
           traefik.http.routers.lidarr.tls.domains[0].main: "{{ ansible_nas_domain }}"
           traefik.http.routers.lidarr.tls.domains[0].sans: "*.{{ ansible_nas_domain }}"
           traefik.http.services.lidarr.loadbalancer.server.port: "8686"
-          homepage.group: "Download Tools"
+          homepage.group: "Arr"
           homepage.name: "Lidarr"
           homepage.icon: "lidarr"
           homepage.href: "http://{{ ansible_nas_hostname }}:{{ lidarr_port }}"

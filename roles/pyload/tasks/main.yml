@@ -33,7 +33,7 @@
           traefik.http.routers.pyload.tls.domains[0].main: "{{ ansible_nas_domain }}"
           traefik.http.routers.pyload.tls.domains[0].sans: "*.{{ ansible_nas_domain }}"
           traefik.http.services.pyload.loadbalancer.server.port: "8000"
-          homepage.group: Download Tools
+          homepage.group: Arr
           homepage.name: PyLoad
           homepage.icon: pyload
           homepage.href: "http://{{ ansible_nas_hostname }}:8000"

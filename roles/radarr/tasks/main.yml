@@ -32,7 +32,7 @@
           traefik.http.routers.radarr.tls.domains[0].main: "{{ ansible_nas_domain }}"
           traefik.http.routers.radarr.tls.domains[0].sans: "*.{{ ansible_nas_domain }}"
           traefik.http.services.radarr.loadbalancer.server.port: "7878"
-          homepage.group: "Download Tools"
+          homepage.group: "Arr"
           homepage.name: "Radarr"
           homepage.icon: "radarr"
           homepage.href: "http://{{ ansible_nas_hostname }}:{{ radarr_port }}"
