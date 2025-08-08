@@ -91,6 +91,14 @@ samba_server_string: Ansible NAS
 
 # Shares you want published over Samba.
 samba_shares:
+  - name: docker
+    comment: "Docker config"
+    guest_ok: yes
+    public: yes
+    writable: yes
+    browseable: yes
+    path: "{{ docker_home }}"
+
   - name: downloads
     comment: "Stuff downloaded"
     guest_ok: yes
