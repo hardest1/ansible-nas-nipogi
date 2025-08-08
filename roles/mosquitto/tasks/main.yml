@@ -27,7 +27,6 @@
           - "{{ mosquitto_data_directory }}/log:/mosquitto/log:rw"
         ports:
           - "{{ mosquitto_port_a }}:1883"
-          - "{{ mosquitto_port_b }}:9001"
         restart_policy: unless-stopped
         restart: "{{ mosquitto_conf is changed }}"
         memory: 1g
@@ -35,8 +34,7 @@
           homepage.group: "Smart Home"
           homepage.name: Mosquitto
           homepage.icon: mosquitto
-          homepage.href: "http://{{ ansible_nas_hostname }}:9001"
-          homepage.description: MQTT Broker
+          homepage.description: MQTT (Port 1883)
   when: mosquitto_enabled is true
 
 - name: Stop Mosquitto
