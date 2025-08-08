@@ -369,6 +369,10 @@
       tags:
         - radarr
 
+    - role: readarr
+      tags:
+        - readarr
+
     - role: romm
       tags:
         - romm
