@@ -86,6 +86,12 @@ recordings_root: "{{ samba_shares_root }}/recordings"
 # Where pr0n is stored
 pron_root: "{{ samba_shares_root }}/pron"
 
+# Synced Folders
+syncthing_root: "{{ samba_shares_root }}/syncthing"
+
+# 3D Models etc
+threed_root: "{{ samba_shares_root }}/3d"
+
 # The description that'll appear next to your Ansible-NAS box when browsing your network
 samba_server_string: Ansible NAS
 
@@ -258,6 +264,22 @@ samba_shares:
     writable: yes
     browseable: yes
     path: "{{ pron_root }}"
+
+  - name: syncthing
+    comment: "Syncthing"
+    guest_ok: yes
+    public: yes
+    writable: yes
+    browseable: yes
+    path: "{{ syncthing_root }}"
+
+  - name: 3d
+    comment: "3D Printing"
+    guest_ok: yes
+    public: yes
+    writable: yes
+    browseable: yes
+    path: "{{ threed_root }}"
 
 ###
 ### NFS
