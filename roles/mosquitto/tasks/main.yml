@@ -16,6 +16,12 @@
         dest: "{{ mosquitto_data_directory }}/config/mosquitto.conf"
       register: mosquitto_conf
 
+    - name: Template pwfile
+      ansible.builtin.copy:
+        src: pwfile
+        dest: "{{ mosquitto_data_directory }}/config/pwfile"
+      register: mosquitto_pwfile
+
     - name: Create Mosquitto container
       community.docker.docker_container:
         name: "{{ mosquitto_container_name }}"
@@ -23,6 +29,7 @@
         pull: true
         volumes:
           - "{{ mosquitto_data_directory }}/config/mosquitto.conf:/mosquitto/config/mosquitto.conf:rw"
+          - "{{ mosquitto_data_directory }}/config/pwfile:/mosquitto/config/pwfile:rw"
           - "{{ mosquitto_data_directory }}/data:/mosquitto/data:rw"
           - "{{ mosquitto_data_directory }}/log:/mosquitto/log:rw"
         ports:
