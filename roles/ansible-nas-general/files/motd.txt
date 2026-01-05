@@ -7,4 +7,4 @@ _____    ____   _____|__\_ |__ |  |   ____             ____ _____    ______
      \/     \/     \/        \/          \/               \/     \/     \/
    a n s i b l e - n a s      https://github.com/hardest1/ansible-nas-nipogi
 
-Modified by hardest1
+HARTMANN IT SOLUTIONS GMBH - WWW.HARTMANN-IT.DE
