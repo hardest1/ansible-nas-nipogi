@@ -40,6 +40,6 @@
     state: directory
     owner: ansible-nas
     group: ansible-nas
-    mode: "u=rwX,g=rwX,o=rX"
+    mode: "u=rwX,g=rwX,o=rwX"
     recurse: false
   loop: "{{ samba_shares }}"
