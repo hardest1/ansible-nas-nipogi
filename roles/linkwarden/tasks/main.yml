@@ -11,6 +11,11 @@
         - "{{ linkwarden_data_directory }}/pgsql"
 
         
+    - name: Create linkwarden network
+      community.docker.docker_network:
+        name: "linkwarden-network"
+
+        
     - name: Create Postgres container for Linkwarden
       community.docker.docker_container:
         name: "{{ linkwarden_pgsql_container_name }}"
@@ -21,6 +26,8 @@
         env:
           POSTGRES_PASSWORD: "{{linkwarden_pgsql_password}}"
         restart_policy: unless-stopped
+        networks:
+          - name: "linkwarden-network"
         memory: "{{ linkwarden_pgsql_memory }}"
 
     - name: Linkwarden Docker Container
@@ -30,12 +37,12 @@
         pull: true
         ports:
           - "{{ linkwarden_port }}:3000"
-        links:
-          - "{{ linkwarden_pgsql_container_name }}:db"
         volumes:
           - "{{ linkwarden_data_directory }}:/data/data:rw"
+        networks:
+          - name: "linkwarden-network"
         env:
-          DATABASE_URL: "postgresql://postgres:{{linkwarden_pgsql_password}}@db:5432/postgres"
+          DATABASE_URL: "postgresql://postgres:{{linkwarden_pgsql_password}}@{{ linkwarden_pgsql_container_name }}:5432/postgres"
           NEXTAUTH_SECRET: "{{linkwarden_nextauth_secret}}"
           NEXTAUTH_URL: "http://{{ ansible_nas_hostname }}:{{ linkwarden_port }}/api/v1/auth"
         memory: "{{ linkwarden_memory }}"
