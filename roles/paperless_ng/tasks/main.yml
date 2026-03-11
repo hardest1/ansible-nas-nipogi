@@ -35,7 +35,7 @@
         image: "{{ paperless_ng_db_image_name }}:{{ paperless_ng_db_image_version }}"
         pull: true
         volumes:
-          - "{{ paperless_ng_postgres_directory }}:/var/lib/postgresql/data"
+          - "{{ paperless_ng_postgres_directory }}:/var/lib/postgresql"
         env:
           POSTGRES_DB: "{{ paperless_ng_postgres_db }}"
           POSTGRES_USER: "{{ paperless_ng_postgres_user }}"
@@ -64,7 +64,10 @@
           USERMAP_UID: "{{ paperless_ng_user_id }}"
           USERMAP_GID: "{{ paperless_ng_group_id }}"
           PAPERLESS_OCR_LANGUAGES: "{{ paperless_ng_languages }}"
-        restart_policy: unless-stopped
+          PAPERLESS_EMAIL_TASK_CRON: "*/1 * * * *" # check mail once per minute instead of every 10 minutes
+          PAPERLESS_FILENAME_FORMAT: "{{ '{{' }} document_type {{ '}}' }}/{{ '{{' }} created {{ '}}' }}_{{ '{{' }} title {{ '}}' }}"
+          PAPERLESS_URL: "{{ paperless_ng_publicurl }}"
+          restart_policy: unless-stopped
         memory: "{{ paperless_ng_ui_memory }}"
         networks:
           - name: "{{ paperless_ng_network_name }}"
@@ -79,7 +82,7 @@
           homepage.group: "Smart Home"
           homepage.name: Paperless NG
           homepage.icon: paperless-ng
-          homepage.href: "http://{{ ansible_nas_hostname }}:{{ paperless_ng_port }}"
+          homepage.href: "{{paperless_ng_publicurl}}"
           homepage.description: Document buffer
           #homepage.widget.type: paperless-ng
           #homepage.widget.url: "http://{{ ansible_nas_hostname }}:{{ paperless_ng_port }}"
