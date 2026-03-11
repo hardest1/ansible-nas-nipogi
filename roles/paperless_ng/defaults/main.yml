@@ -26,14 +26,14 @@ paperless_ng_postgres_password: "paperless"
 
 paperless_ng_redis_container_name: "paperless-redis"
 paperless_ng_redis_image_name: "redis"
-paperless_ng_redis_image_version: "6.0"
+paperless_ng_redis_image_version: "8"
 
 paperless_ng_db_container_name: "paperless-db"
 paperless_ng_db_image_name: "postgres"
-paperless_ng_db_image_version: "13"
+paperless_ng_db_image_version: "18"
 
 paperless_ng_uiserver_container_name: "paperless-uiserver"
-paperless_ng_uiserver_image_name: "jonaswinkler/paperless-ng"
+paperless_ng_uiserver_image_name: "ghcr.io/paperless-ngx/paperless-ngx"
 paperless_ng_uiserver_image_version: "latest"
 
 # uid/guid
@@ -42,6 +42,7 @@ paperless_ng_group_id: "1000"
 
 # settings
 paperless_ng_languages: "deu eng"
+paperless_ng_publicurl: ""
 
 # specs
 paperless_ng_ui_memory: 1g
