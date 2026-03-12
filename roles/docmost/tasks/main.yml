@@ -1,0 +1,108 @@
+---
+- name: Start Docmost
+  block:
+    - name: Create Docmost Directories
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+      with_items:
+        - "{{ docmost_storage_directory }}"
+        - "{{ docmost_postgres_directory }}"
+        - "{{ docmost_redis_directory }}"
+
+    - name: Create Docmost network
+      community.docker.docker_network:
+        name: "{{ docmost_network_name }}"
+
+    - name: Create Docmost Postgres container
+      community.docker.docker_container:
+        name: "{{ docmost_postgres_container_name }}"
+        image: "{{ docmost_postgres_image_name }}:{{ docmost_postgres_image_version }}"
+        pull: true
+        networks:
+          - name: "{{ docmost_network_name }}"
+        network_mode: "{{ docmost_network_name }}"
+        volumes:
+          - "{{ docmost_postgres_directory }}:/var/lib/postgresql/data:rw"
+        env:
+          POSTGRES_DB: "{{ docmost_postgres_db }}"
+          POSTGRES_USER: "{{ docmost_postgres_user }}"
+          POSTGRES_PASSWORD: "{{ docmost_postgres_password }}"
+        restart_policy: unless-stopped
+        memory: "{{ docmost_postgres_memory }}"
+
+    - name: Create Docmost Redis container
+      community.docker.docker_container:
+        name: "{{ docmost_redis_container_name }}"
+        image: "{{ docmost_redis_image_name }}:{{ docmost_redis_image_version }}"
+        pull: true
+        command:
+          - redis-server
+          - --appendonly
+          - "yes"
+          - --maxmemory-policy
+          - noeviction
+        networks:
+          - name: "{{ docmost_network_name }}"
+        network_mode: "{{ docmost_network_name }}"
+        volumes:
+          - "{{ docmost_redis_directory }}:/data:rw"
+        restart_policy: unless-stopped
+        memory: "{{ docmost_redis_memory }}"
+
+    - name: Create Docmost Docker Container
+      community.docker.docker_container:
+        name: "{{ docmost_container_name }}"
+        image: "{{ docmost_image_name }}:{{ docmost_image_version }}"
+        pull: true
+        networks:
+          - name: "{{ docmost_network_name }}"
+        network_mode: "{{ docmost_network_name }}"
+        volumes:
+          - "{{ docmost_storage_directory }}:/app/data/storage:rw"
+        ports:
+          - "{{ docmost_port }}:3000"
+        env:
+          APP_URL: "{{ docmost_public_url }}"
+          APP_SECRET: "{{ docmost_app_secret }}"
+          DATABASE_URL: "postgresql://{{ docmost_postgres_user }}:{{ docmost_postgres_password }}@{{ docmost_postgres_container_name }}:5432/{{ docmost_postgres_db }}"
+          REDIS_URL: "redis://{{ docmost_redis_container_name }}:6379"
+          STORAGE_DRIVER: local
+        restart_policy: unless-stopped
+        memory: "{{ docmost_memory }}"
+        labels:
+          traefik.enable: "{{ docmost_available_externally | string }}"
+          traefik.http.routers.docmost.rule: "Host(`{{ docmost_hostname }}.{{ ansible_nas_domain }}`)"
+          traefik.http.routers.docmost.tls.certresolver: "letsencrypt"
+          traefik.http.routers.docmost.tls.domains[0].main: "{{ ansible_nas_domain }}"
+          traefik.http.routers.docmost.tls.domains[0].sans: "*.{{ ansible_nas_domain }}"
+          traefik.http.services.docmost.loadbalancer.server.port: "3000"
+          homepage.group: Productivity
+          homepage.name: Docmost
+          homepage.icon: docmost
+          homepage.href: "{{ docmost_public_url }}"
+          homepage.description: Collaborative wiki and docs
+  when: docmost_enabled is true
+
+- name: Stop Docmost
+  block:
+    - name: Stop Docmost
+      community.docker.docker_container:
+        name: "{{ docmost_container_name }}"
+        state: absent
+
+    - name: Stop Docmost Redis
+      community.docker.docker_container:
+        name: "{{ docmost_redis_container_name }}"
+        state: absent
+
+    - name: Stop Docmost Postgres
+      community.docker.docker_container:
+        name: "{{ docmost_postgres_container_name }}"
+        state: absent
+
+    - name: Remove Docmost network
+      community.docker.docker_network:
+        name: "{{ docmost_network_name }}"
+        state: absent
+  when: docmost_enabled is false

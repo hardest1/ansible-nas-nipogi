@@ -113,6 +113,10 @@
       tags:
         - deluge
 
+    - role: docmost
+      tags:
+        - docmost
+
     - role: dokuwiki
       tags:
         - dokuwiki

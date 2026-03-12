@@ -1,0 +1,37 @@
+---
+docmost_enabled: false
+docmost_available_externally: false
+
+# directories
+docmost_data_directory: "{{ docker_home }}/docmost"
+docmost_storage_directory: "{{ docmost_data_directory }}/storage"
+docmost_postgres_directory: "{{ docmost_data_directory }}/postgres"
+docmost_redis_directory: "{{ docmost_data_directory }}/redis"
+
+# network
+docmost_port: "3003"
+docmost_hostname: "docmost"
+docmost_network_name: "docmost-network"
+docmost_public_url: "http://{{ ansible_nas_hostname }}:{{ docmost_port }}"
+
+# secrets
+docmost_app_secret: "change_this_docmost_app_secret_to_a_long_random_value"
+docmost_postgres_db: "docmost"
+docmost_postgres_user: "docmost"
+docmost_postgres_password: "change_this_docmost_db_password"
+
+# specs
+docmost_memory: 1g
+docmost_postgres_memory: 1g
+docmost_redis_memory: 512m
+
+# docker
+docmost_container_name: "docmost"
+docmost_image_name: "docmost/docmost"
+docmost_image_version: "latest"
+docmost_postgres_container_name: "docmost-postgres"
+docmost_postgres_image_name: "postgres"
+docmost_postgres_image_version: "18-alpine"
+docmost_redis_container_name: "docmost-redis"
+docmost_redis_image_name: "redis"
+docmost_redis_image_version: "8-alpine"
