@@ -36,7 +36,7 @@
           homepage.href: "http://{{ ansible_nas_hostname }}:{{ traefik_port_ui }}"
           homepage.description: Reverse Proxy for NAS
           homepage.widget.type: traefik
-          homepage.widget.url: "http://{{ ansible_nas_hostname }}:{{ traefik_port_ui }}"
+          homepage.widget.url: "http://{{ ansible_nas_hostname }}.{{ ansible_nas_domain }}:{{ traefik_port_ui }}"
   when: traefik_enabled is true
 
 - name: Stop Traefik
