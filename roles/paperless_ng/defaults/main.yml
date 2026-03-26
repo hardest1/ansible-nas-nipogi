@@ -43,6 +43,14 @@ paperless_ng_group_id: "1000"
 # settings
 paperless_ng_languages: "deu eng"
 paperless_ng_publicurl: ""
+paperless_ng_filename_format: "{{ '{{' }} document_type {{ '}}' }}/{{ '{{' }} created {{ '}}' }}_{{ '{{' }} title {{ '}}' }}"
+paperless_ng_email_task_cron: "*/2 * * * *" # check mail every 2 minutes
+
+# oidc
+paperless_ng_default_groups: ""
+paperless_ng_sso_enabled: false
+paperless_ng_social_providers: []
+paperless_ng_apps: ""
 
 # specs
 paperless_ng_ui_memory: 1g

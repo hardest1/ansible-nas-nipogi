@@ -64,10 +64,16 @@
           USERMAP_UID: "{{ paperless_ng_user_id }}"
           USERMAP_GID: "{{ paperless_ng_group_id }}"
           PAPERLESS_OCR_LANGUAGES: "{{ paperless_ng_languages }}"
-          PAPERLESS_EMAIL_TASK_CRON: "*/1 * * * *" # check mail once per minute instead of every 10 minutes
-          PAPERLESS_FILENAME_FORMAT: "{{ '{{' }} document_type {{ '}}' }}/{{ '{{' }} created {{ '}}' }}_{{ '{{' }} title {{ '}}' }}"
+          PAPERLESS_EMAIL_TASK_CRON: "{{ paperless_ng_email_task_cron }}"
+          PAPERLESS_FILENAME_FORMAT: "{{ paperless_ng_filename_format }}"
           PAPERLESS_URL: "{{ paperless_ng_publicurl }}"
-          restart_policy: unless-stopped
+          PAPERLESS_SOCIAL_AUTO_SIGNUP: "{{ paperless_ng_sso_enabled | string }}"
+          PAPERLESS_DISABLE_REGULAR_LOGIN: "{{ paperless_ng_sso_enabled | string }}"
+          PAPERLESS_REDIRECT_LOGIN_TO_SSO: "{{ paperless_ng_sso_enabled | string }}"
+          PAPERLESS_ACCOUNT_DEFAULT_GROUPS: "{{ paperless_ng_default_groups }}"
+          PAPERLESS_APPS: "{{ paperless_ng_apps }}"
+          PAPERLESS_SOCIALACCOUNT_PROVIDERS: "{{ paperless_ng_social_providers | to_json }}"
+        restart_policy: unless-stopped
         memory: "{{ paperless_ng_ui_memory }}"
         networks:
           - name: "{{ paperless_ng_network_name }}"
