@@ -66,6 +66,7 @@
           homepage.widget.type: gitea
           homepage.widget.url: "http://{{ ansible_nas_hostname }}.{{ ansible_nas_domain }}:{{ gitea_port_http }}"
           homepage.widget.key: "{{ gitea_token }}"
+  when: gitea_enabled is true
 - name: Stop Gitea
   block:
     - name: Stop Gitea
