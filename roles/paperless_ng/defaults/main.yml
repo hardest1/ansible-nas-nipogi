@@ -32,6 +32,14 @@ paperless_ng_db_container_name: "paperless-db"
 paperless_ng_db_image_name: "postgres"
 paperless_ng_db_image_version: "18"
 
+paperless_ng_gotenberg_container_name: "paperless-gotenberg"
+paperless_ng_gotenberg_image_name: "gotenberg/gotenberg"
+paperless_ng_gotenberg_image_version: "latest"
+
+paperless_ng_tika_container_name: "paperless-tika"
+paperless_ng_tika_image_name: "apache/tika"
+paperless_ng_tika_image_version: "latest"
+
 paperless_ng_uiserver_container_name: "paperless-uiserver"
 paperless_ng_uiserver_image_name: "ghcr.io/paperless-ngx/paperless-ngx"
 paperless_ng_uiserver_image_version: "latest"
@@ -45,6 +53,9 @@ paperless_ng_languages: "deu eng"
 paperless_ng_publicurl: ""
 paperless_ng_filename_format: "{{ '{{' }} document_type {{ '}}' }}/{{ '{{' }} created {{ '}}' }}_{{ '{{' }} title {{ '}}' }}"
 paperless_ng_email_task_cron: "*/2 * * * *" # check mail every 2 minutes
+paperless_ng_tika_enabled: true
+paperless_ng_gotenberg_endpoint: "http://{{ paperless_ng_gotenberg_container_name }}:3000"
+paperless_ng_tika_endpoint: "http://{{ paperless_ng_tika_container_name }}:9998"
 
 # oidc
 paperless_ng_default_groups: ""

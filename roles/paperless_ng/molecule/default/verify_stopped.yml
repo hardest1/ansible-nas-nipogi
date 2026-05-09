@@ -24,9 +24,23 @@
         state: absent
       register: result_redis
 
+    - name: Try and stop and remove paperless_ng gotenberg
+      community.docker.docker_container:
+        name: "{{ paperless_ng_gotenberg_container_name }}"
+        state: absent
+      register: result_gotenberg
+
+    - name: Try and stop and remove paperless_ng tika
+      community.docker.docker_container:
+        name: "{{ paperless_ng_tika_container_name }}"
+        state: absent
+      register: result_tika
+
     - name: Check if paperless_ng is stopped
       ansible.builtin.assert:
         that:
           - not result.changed
           - not result_db.changed
           - not result_redis.changed
+          - not result_gotenberg.changed
+          - not result_tika.changed

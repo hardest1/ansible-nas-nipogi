@@ -46,6 +46,26 @@
           - name: "{{ paperless_ng_network_name }}"
         network_mode: "{{ paperless_ng_network_name }}"
 
+    - name: Create paperless_ng gotenberg Docker Container
+      community.docker.docker_container:
+        name: "{{ paperless_ng_gotenberg_container_name }}"
+        image: "{{ paperless_ng_gotenberg_image_name }}:{{ paperless_ng_gotenberg_image_version }}"
+        pull: true
+        restart_policy: unless-stopped
+        networks:
+          - name: "{{ paperless_ng_network_name }}"
+        network_mode: "{{ paperless_ng_network_name }}"
+
+    - name: Create paperless_ng tika Docker Container
+      community.docker.docker_container:
+        name: "{{ paperless_ng_tika_container_name }}"
+        image: "{{ paperless_ng_tika_image_name }}:{{ paperless_ng_tika_image_version }}"
+        pull: true
+        restart_policy: unless-stopped
+        networks:
+          - name: "{{ paperless_ng_network_name }}"
+        network_mode: "{{ paperless_ng_network_name }}"
+
     - name: Create paperless_ng UI Docker Container
       community.docker.docker_container:
         name: "{{ paperless_ng_uiserver_container_name }}"
@@ -67,6 +87,9 @@
           PAPERLESS_EMAIL_TASK_CRON: "{{ paperless_ng_email_task_cron }}"
           PAPERLESS_FILENAME_FORMAT: "{{ paperless_ng_filename_format }}"
           PAPERLESS_URL: "{{ paperless_ng_publicurl }}"
+          PAPERLESS_TIKA_ENABLED: "{{ paperless_ng_tika_enabled | ternary('1', '0') }}"
+          PAPERLESS_TIKA_GOTENBERG_ENDPOINT: "{{ paperless_ng_gotenberg_endpoint }}"
+          PAPERLESS_TIKA_ENDPOINT: "{{ paperless_ng_tika_endpoint }}"
           PAPERLESS_SOCIAL_AUTO_SIGNUP: "{{ paperless_ng_sso_enabled | string }}"
           PAPERLESS_DISABLE_REGULAR_LOGIN: "{{ paperless_ng_sso_enabled | string }}"
           PAPERLESS_REDIRECT_LOGIN_TO_SSO: "{{ paperless_ng_sso_enabled | string }}"
@@ -85,7 +108,7 @@
           traefik.http.routers.paperless_ng.tls.domains[0].main: "{{ ansible_nas_domain }}"
           traefik.http.routers.paperless_ng.tls.domains[0].sans: "*.{{ ansible_nas_domain }}"
           traefik.http.services.paperless_ng.loadbalancer.server.port: "8000"
-          homepage.group: "Productivity"
+          homepage.group: "System"
           homepage.name: Paperless NG
           homepage.icon: paperless-ng
           homepage.href: "{{paperless_ng_publicurl}}"
@@ -108,5 +131,13 @@
     - name: Stop paperless_ng db
       community.docker.docker_container:
         name: "{{ paperless_ng_db_container_name }}"
+        state: absent
+    - name: Stop paperless_ng gotenberg
+      community.docker.docker_container:
+        name: "{{ paperless_ng_gotenberg_container_name }}"
+        state: absent
+    - name: Stop paperless_ng tika
+      community.docker.docker_container:
+        name: "{{ paperless_ng_tika_container_name }}"
         state: absent
   when: paperless_ng_enabled is false
