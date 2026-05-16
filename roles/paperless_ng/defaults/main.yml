@@ -56,6 +56,8 @@ paperless_ng_email_task_cron: "*/2 * * * *" # check mail every 2 minutes
 paperless_ng_tika_enabled: true
 paperless_ng_gotenberg_endpoint: "http://{{ paperless_ng_gotenberg_container_name }}:3000"
 paperless_ng_tika_endpoint: "http://{{ paperless_ng_tika_container_name }}:9998"
+paperless_ng_consumer_delete_duplicates: true
+paperless_ng_consumer_recursive: true
 
 # oidc
 paperless_ng_default_groups: ""

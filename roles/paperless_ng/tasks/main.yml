@@ -41,7 +41,7 @@
           POSTGRES_USER: "{{ paperless_ng_postgres_user }}"
           POSTGRES_PASSWORD: "{{ paperless_ng_postgres_password }}"
         restart_policy: unless-stopped
-        memory: "{{ paperless_ng_postgres_memory }}"
+        # memory: "{{ paperless_ng_postgres_memory }}"
         networks:
           - name: "{{ paperless_ng_network_name }}"
         network_mode: "{{ paperless_ng_network_name }}"
@@ -96,8 +96,10 @@
           PAPERLESS_ACCOUNT_DEFAULT_GROUPS: "{{ paperless_ng_default_groups }}"
           PAPERLESS_APPS: "{{ paperless_ng_apps }}"
           PAPERLESS_SOCIALACCOUNT_PROVIDERS: "{{ paperless_ng_social_providers | to_json }}"
+          PAPERLESS_CONSUMER_DELETE_DUPLICATES: "{{ paperless_ng_consumer_delete_duplicates | string }}"
+          PAPERLESS_CONSUMER_RECURSIVE: "{{ paperless_ng_consumer_recursive | string }}"
         restart_policy: unless-stopped
-        memory: "{{ paperless_ng_ui_memory }}"
+        # memory: "{{ paperless_ng_ui_memory }}"
         networks:
           - name: "{{ paperless_ng_network_name }}"
         network_mode: "{{ paperless_ng_network_name }}"
