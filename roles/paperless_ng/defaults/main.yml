@@ -66,6 +66,6 @@ paperless_ng_social_providers: []
 paperless_ng_apps: ""
 
 # specs
-paperless_ng_ui_memory: 1g
-paperless_ng_postgres_memory: 1g
-paperless_ng_redis_memory: 1g
+paperless_ng_ui_memory: 8g
+paperless_ng_postgres_memory: 2g
+paperless_ng_redis_memory: 2g

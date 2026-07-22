@@ -99,7 +99,8 @@
           PAPERLESS_CONSUMER_DELETE_DUPLICATES: "{{ paperless_ng_consumer_delete_duplicates | string }}"
           PAPERLESS_CONSUMER_RECURSIVE: "{{ paperless_ng_consumer_recursive | string }}"
         restart_policy: unless-stopped
-        # memory: "{{ paperless_ng_ui_memory }}"
+        memory: "{{ paperless_ng_ui_memory }}"
+        memory_swap: "{{ paperless_ng_ui_memory_swap | default(paperless_ng_ui_memory) }}"
         networks:
           - name: "{{ paperless_ng_network_name }}"
         network_mode: "{{ paperless_ng_network_name }}"
