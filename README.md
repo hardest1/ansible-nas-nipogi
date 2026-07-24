@@ -137,6 +137,42 @@ That said, if specific functionality you want isn't included and you think other
 
 Ansible NAS doesn't set up your disk partitions, primarily because getting it wrong can be incredibly destructive. That aside, configuring partitions is usually a one-time (or very infrequent) event, so there's not much to be gained by automating it. Check out the [docs](https://ansible-nas.io/docs/) for recommended setups.
 
+## Private Host Configuration
+
+The real `nipogi` and `docky` inventories and group variables are stored as
+multiline Secure Notes in the 1Password vault `hw-lan`:
+
+| Item | Contents |
+| --- | --- |
+| `ansible-nas-nipogi-inventory` | Nipogi Ansible inventory |
+| `ansible-nas-nipogi-config` | Nipogi `group_vars/nas.yml` |
+| `ansible-nas-docky-inventory` | Docky Ansible inventory |
+| `ansible-nas-docky-config` | Docky `group_vars/nas.yml` |
+
+Each document is stored as a fenced `ini` or `yaml` code block in the item's
+built-in Notes field, so it remains readable and editable in 1Password. The
+account or service account running Ansible needs read access to `hw-lan`.
+
+Run the playbook for one host with:
+
+```bash
+bin/ansible-nas nipogi
+bin/ansible-nas docky
+```
+
+Additional arguments are forwarded to `ansible-playbook`:
+
+```bash
+bin/ansible-nas nipogi --check --limit nas
+```
+
+The runner requires the 1Password CLI, `ansible-inventory`,
+`ansible-playbook`, and a writable `XDG_RUNTIME_DIR`. It materializes the
+inventory and `group_vars/nas.yml` in a private runtime directory, validates
+the inventory, runs the playbook with become enabled (`-b -K`), and removes
+the plaintext files on exit. It deliberately refuses to fall back to
+persistent temporary storage.
+
 ## Installation
 
 See [Installation](https://ansible-nas.io/docs/getting-started/installation/).

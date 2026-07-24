@@ -1,0 +1,115 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+readonly repo_root
+readonly onepassword_vault="hw-lan"
+
+runtime_dir=""
+
+usage() {
+    cat <<'EOF'
+Usage: bin/ansible-nas <nipogi|docky> [ansible-playbook options]
+
+Fetch the selected host's inventory and configuration from 1Password, validate
+the materialized inventory, and run nas.yml. Additional arguments are passed
+unchanged to ansible-playbook. Become is always enabled with -b -K.
+EOF
+}
+
+fail() {
+    printf 'Error: %s\n' "$*" >&2
+    exit 1
+}
+
+cleanup() {
+    set +e
+
+    if [[ -n "${runtime_dir}" && -d "${runtime_dir}" ]]; then
+        rm -f -- \
+            "${runtime_dir}/inventory" \
+            "${runtime_dir}/inventory.note" \
+            "${runtime_dir}/group_vars/nas.yml.note" \
+            "${runtime_dir}/group_vars/nas.yml"
+        rmdir -- "${runtime_dir}/group_vars" "${runtime_dir}" 2>/dev/null
+    fi
+}
+trap cleanup EXIT
+trap 'exit 129' HUP
+trap 'exit 130' INT
+trap 'exit 143' TERM
+
+fetch_code_note() {
+    local reference="$1"
+    local language="$2"
+    local destination="$3"
+    local note_file="${destination}.note"
+    local opening_fence
+
+    printf -v opening_fence '```%s' "${language}"
+
+    op read "${reference}" >"${note_file}"
+    [[ -s "${note_file}" ]] ||
+        fail "1Password returned an empty Secure Note"
+    [[ "$(head -n 1 "${note_file}")" == "${opening_fence}" ]] ||
+        fail "Secure Note must start with a ${language} code fence"
+    [[ "$(tail -n 1 "${note_file}")" == '```' ]] ||
+        fail "Secure Note must end with a code fence"
+
+    sed '1d;$d' "${note_file}" >"${destination}"
+    rm -f -- "${note_file}"
+
+    [[ -s "${destination}" ]] ||
+        fail "Secure Note contains an empty code block"
+}
+
+if [[ "${1:-}" == "--help" || "${1:-}" == "-h" ]]; then
+    usage
+    exit 0
+fi
+
+[[ "$#" -ge 1 ]] || {
+    usage >&2
+    exit 2
+}
+
+readonly host="$1"
+shift
+
+case "${host}" in
+    nipogi | docky) ;;
+    *)
+        fail "host must be either 'nipogi' or 'docky'"
+        ;;
+esac
+
+for required_command in op ansible-inventory ansible-playbook; do
+    command -v "${required_command}" >/dev/null 2>&1 ||
+        fail "required command not found: ${required_command}"
+done
+
+[[ -n "${XDG_RUNTIME_DIR:-}" ]] ||
+    fail "XDG_RUNTIME_DIR is required to avoid writing secrets to persistent storage"
+[[ -d "${XDG_RUNTIME_DIR}" && -w "${XDG_RUNTIME_DIR}" ]] ||
+    fail "XDG_RUNTIME_DIR is not a writable directory"
+
+umask 077
+runtime_dir="$(mktemp -d "${XDG_RUNTIME_DIR%/}/ansible-nas.XXXXXX")"
+mkdir -m 700 "${runtime_dir}/group_vars"
+
+readonly inventory_file="${runtime_dir}/inventory"
+readonly config_file="${runtime_dir}/group_vars/nas.yml"
+
+fetch_code_note \
+    "op://${onepassword_vault}/ansible-nas-${host}-inventory/notesPlain" \
+    "ini" \
+    "${inventory_file}"
+fetch_code_note \
+    "op://${onepassword_vault}/ansible-nas-${host}-config/notesPlain" \
+    "yaml" \
+    "${config_file}"
+
+cd "${repo_root}"
+ansible-inventory -i "${inventory_file}" --graph >/dev/null
+ansible-playbook -i "${inventory_file}" nas.yml -b -K "$@"

@@ -38,3 +38,9 @@ jobs:
         uses: articulate/actions-markdownlint@v1
         with:
           version: 0.32.2
+
+      - name: Lint shell scripts
+        run: shellcheck bin/ansible-nas tests/test-onepassword-runner.sh
+
+      - name: Test 1Password runner
+        run: tests/test-onepassword-runner.sh
